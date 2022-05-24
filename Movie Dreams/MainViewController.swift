@@ -13,6 +13,11 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         initialize()
     }
+    
+    let button: UIButton = {
+        $0.setTitle("Button", for: .normal)
+        return $0
+    }(UIButton())
 
     func initialize() {
         view.backgroundColor = .green
