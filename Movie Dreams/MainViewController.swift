@@ -11,9 +11,12 @@ class MainViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .green
+        initialize()
     }
 
+    func initialize() {
+        view.backgroundColor = .green
+    }
 
 }
 
