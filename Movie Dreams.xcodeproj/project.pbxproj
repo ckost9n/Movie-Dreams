@@ -15,7 +15,6 @@
 		3C0028B0283CF7F300155250 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3C0028AF283CF7F300155250 /* Assets.xcassets */; };
 		3C0028B3283CF7F300155250 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3C0028B1283CF7F300155250 /* LaunchScreen.storyboard */; };
 		3C729465283D235700CF584F /* VideoListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C729464283D235700CF584F /* VideoListCell.swift */; };
-		3C729469283D36B800CF584F /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C729468283D36B800CF584F /* InfoViewController.swift */; };
 		3C72946C283D3ED300CF584F /* UINavigationBar + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C72946B283D3ED300CF584F /* UINavigationBar + Extension.swift */; };
 /* End PBXBuildFile section */
 
@@ -30,7 +29,6 @@
 		3C0028B2283CF7F300155250 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3C0028B4283CF7F300155250 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3C729464283D235700CF584F /* VideoListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoListCell.swift; sourceTree = "<group>"; };
-		3C729468283D36B800CF584F /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		3C72946B283D3ED300CF584F /* UINavigationBar + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationBar + Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -88,12 +86,7 @@
 			isa = PBXGroup;
 			children = (
 				3C0028AA283CF7E700155250 /* MainViewController.swift */,
-
 				1A525A7C283D21E200950AD9 /* MovieCardController.swift */,
-				1A525A7E283D39E400950AD9 /* StarView.swift */,
-
-				3C729468283D36B800CF584F /* InfoViewController.swift */,
-
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -108,6 +101,7 @@
 		3C0028BE283CF8D700155250 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				1A525A7E283D39E400950AD9 /* StarView.swift */,
 				3C729464283D235700CF584F /* VideoListCell.swift */,
 			);
 			name = Views;
@@ -202,12 +196,8 @@
 			files = (
 				3C0028AB283CF7E700155250 /* MainViewController.swift in Sources */,
 				3C0028A7283CF7E700155250 /* AppDelegate.swift in Sources */,
-
 				1A525A7D283D21E200950AD9 /* MovieCardController.swift in Sources */,
 				1A525A7F283D39E400950AD9 /* StarView.swift in Sources */,
-
-				3C729469283D36B800CF584F /* InfoViewController.swift in Sources */,
-
 				3C0028A9283CF7E700155250 /* SceneDelegate.swift in Sources */,
 				3C729465283D235700CF584F /* VideoListCell.swift in Sources */,
 				3C72946C283D3ED300CF584F /* UINavigationBar + Extension.swift in Sources */,

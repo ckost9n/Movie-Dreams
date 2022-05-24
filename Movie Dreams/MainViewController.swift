@@ -54,10 +54,10 @@ class MainViewController: UITableViewController {
     // MARK: - Table view delegate
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let infoVC = InfoViewController()
-        infoVC.modalPresentationStyle = .fullScreen
-        infoVC.modalTransitionStyle = .crossDissolve
-        navigationController?.pushViewController(infoVC, animated: true)
+        let movieVC = MovieCardController()
+        movieVC.modalPresentationStyle = .fullScreen
+        movieVC.modalTransitionStyle = .crossDissolve
+        navigationController?.present(movieVC, animated: true)
     }
 
     
