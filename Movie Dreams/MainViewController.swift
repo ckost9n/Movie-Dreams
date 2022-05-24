@@ -25,9 +25,11 @@ class MainViewController: UITableViewController {
     private func setupViews() {
         tableView.register(VideoListCell.self, forCellReuseIdentifier: VideoListCell.identifier)
         tableView.rowHeight = 300
+
     }
     
     // MARK: - Table view data source
+
 
 //    override func numberOfSections(in tableView: UITableView) -> Int {
 //        // #warning Incomplete implementation, return the number of sections
@@ -58,5 +60,6 @@ class MainViewController: UITableViewController {
         navigationController?.pushViewController(infoVC, animated: true)
     }
 
+    
 }
 
