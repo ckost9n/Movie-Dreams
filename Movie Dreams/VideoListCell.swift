@@ -7,12 +7,16 @@
 
 import UIKit
 
+protocol EventsCell: AnyObject {
+    func didClick()
+}
+
 class VideoListCell: UITableViewCell {
     
     static let identifier = "VideListCell"
     
-    
-    
+    weak var cellDelegate: EventsCell?
+     
     private let nameLabel: UILabel = {
         let label = UILabel()
         label.text = "1"
@@ -22,11 +26,12 @@ class VideoListCell: UITableViewCell {
         return label
     }()
     
-    private let collectionView: UICollectionView = {
+    private let myCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
+        layout.scrollDirection = .horizontal
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .darkBackgound
+        collectionView.showsHorizontalScrollIndicator = false
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
     }()
@@ -34,6 +39,7 @@ class VideoListCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
         
         setDelegates()
         setupViews()
@@ -43,18 +49,19 @@ class VideoListCell: UITableViewCell {
     }
     
     private func setDelegates() {
-        collectionView.delegate = self
-        collectionView.dataSource = self
+        myCollectionView.delegate = self
+        myCollectionView.dataSource = self
+        
     }
     
     private func setupViews() {
         backgroundColor = .darkBackgound
-        collectionView.register(
+        myCollectionView.register(
             CollectionViewCell.self,
             forCellWithReuseIdentifier: CollectionViewCell.identifier
         )
         addSubview(nameLabel)
-        addSubview(collectionView)
+        contentView.addSubview(myCollectionView)
     }
     
     required init?(coder: NSCoder) {
@@ -67,11 +74,11 @@ class VideoListCell: UITableViewCell {
         print(model)
     }
     
-    //    override func setSelected(_ selected: Bool, animated: Bool) {
-    //        super.setSelected(selected, animated: animated)
-    //
-    //        // Configure the view for the selected state
-    //    }
+//        override func setSelected(_ selected: Bool, animated: Bool) {
+//            super.setSelected(selected, animated: animated)
+//    
+//            // Configure the view for the selected state
+//        }
         
 }
     
@@ -83,9 +90,9 @@ extension VideoListCell: UICollectionViewDelegateFlowLayout {
         CGSize(width: collectionView.frame.width / 2.5, height: collectionView.frame.height)
     }
 
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        3
-    }
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+//        3
+//    }
 }
 
 
@@ -94,7 +101,7 @@ extension VideoListCell: UICollectionViewDelegateFlowLayout {
 extension VideoListCell: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 60
+        return 5
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -106,6 +113,14 @@ extension VideoListCell: UICollectionViewDelegate, UICollectionViewDataSource {
         
         return cell
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print("Tap collection \(indexPath.row)")
+        cellDelegate?.didClick()
+        
+    }
+    
+    
     
 }
 
@@ -119,10 +134,10 @@ extension VideoListCell {
         ])
         
         NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 5),
-            collectionView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
-            collectionView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5),
-            collectionView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5)
+            myCollectionView.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 5),
+            myCollectionView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
+            myCollectionView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5),
+            myCollectionView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5)
         ])
     }
 }

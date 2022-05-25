@@ -19,12 +19,15 @@ class MainViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
+        
     }
     
     private func setupViews() {
         tableView.register(VideoListCell.self, forCellReuseIdentifier: VideoListCell.identifier)
         tableView.rowHeight = 300
-
+        tableView.separatorStyle = .none
+        view.backgroundColor = .darkBackgound
+        
     }
     
     // MARK: - Table view data source
@@ -43,22 +46,24 @@ class MainViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: VideoListCell.identifier, for: indexPath) as! VideoListCell
-        
+        cell.cellDelegate = self
         let model = arryTest[indexPath.row]
         cell.configureCell(model)
         
         return cell
     }
+
+}
+
+extension MainViewController: EventsCell {
     
-    // MARK: - Table view delegate
-    
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func didClick() {
+        print("TAP!!!!")
         let movieVC = MovieCardController()
         movieVC.modalPresentationStyle = .fullScreen
         movieVC.modalTransitionStyle = .crossDissolve
         navigationController?.present(movieVC, animated: true)
     }
 
-    
 }
 
