@@ -16,6 +16,9 @@
 		3C0028B3283CF7F300155250 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3C0028B1283CF7F300155250 /* LaunchScreen.storyboard */; };
 		3C729465283D235700CF584F /* VideoListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C729464283D235700CF584F /* VideoListCell.swift */; };
 		3C72946C283D3ED300CF584F /* UINavigationBar + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C72946B283D3ED300CF584F /* UINavigationBar + Extension.swift */; };
+		3C72946E283E2AC100CF584F /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C72946D283E2AC100CF584F /* CollectionViewCell.swift */; };
+		3C729470283E3B2100CF584F /* Date + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C72946F283E3B2100CF584F /* Date + Extension.swift */; };
+		3C729472283E42DB00CF584F /* UIColor + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C729471283E42DB00CF584F /* UIColor + Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +33,9 @@
 		3C0028B4283CF7F300155250 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3C729464283D235700CF584F /* VideoListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoListCell.swift; sourceTree = "<group>"; };
 		3C72946B283D3ED300CF584F /* UINavigationBar + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationBar + Extension.swift"; sourceTree = "<group>"; };
+		3C72946D283E2AC100CF584F /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
+		3C72946F283E3B2100CF584F /* Date + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date + Extension.swift"; sourceTree = "<group>"; };
+		3C729471283E42DB00CF584F /* UIColor + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor + Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +109,7 @@
 			children = (
 				1A525A7E283D39E400950AD9 /* StarView.swift */,
 				3C729464283D235700CF584F /* VideoListCell.swift */,
+				3C72946D283E2AC100CF584F /* CollectionViewCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -120,6 +127,8 @@
 			isa = PBXGroup;
 			children = (
 				3C72946B283D3ED300CF584F /* UINavigationBar + Extension.swift */,
+				3C72946F283E3B2100CF584F /* Date + Extension.swift */,
+				3C729471283E42DB00CF584F /* UIColor + Extension.swift */,
 			);
 			name = Extension;
 			sourceTree = "<group>";
@@ -196,11 +205,14 @@
 			files = (
 				3C0028AB283CF7E700155250 /* MainViewController.swift in Sources */,
 				3C0028A7283CF7E700155250 /* AppDelegate.swift in Sources */,
+				3C729470283E3B2100CF584F /* Date + Extension.swift in Sources */,
+				3C72946E283E2AC100CF584F /* CollectionViewCell.swift in Sources */,
 				1A525A7D283D21E200950AD9 /* MovieCardController.swift in Sources */,
 				1A525A7F283D39E400950AD9 /* StarView.swift in Sources */,
 				3C0028A9283CF7E700155250 /* SceneDelegate.swift in Sources */,
 				3C729465283D235700CF584F /* VideoListCell.swift in Sources */,
 				3C72946C283D3ED300CF584F /* UINavigationBar + Extension.swift in Sources */,
+				3C729472283E42DB00CF584F /* UIColor + Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

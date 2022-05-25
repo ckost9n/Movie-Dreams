@@ -5,7 +5,6 @@
 //  Created by Eugene Kotovich on 24.05.2022.
 //
 
-import Foundation
 import UIKit
 
 /// A view that displays a star rating.

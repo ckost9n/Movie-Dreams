@@ -12,8 +12,7 @@ class MainViewController: UITableViewController {
     private let arryTest = ["Milk", "Bread", "Coffe"]
     
     override func viewWillAppear(_ animated: Bool) {
-        let color = #colorLiteral(red: 0.1764705882, green: 0.1568627451, blue: 0.2078431373, alpha: 1)
-        navigationController?.navigationBar.setupNavigationBar(barColor: color, textColor: .red)
+        navigationController?.navigationBar.setupNavigationBar(barColor: .darkBackgound, textColor: .red)
         navigationItem.title = "Movie Dreams"
     }
 
