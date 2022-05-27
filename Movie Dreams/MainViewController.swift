@@ -13,6 +13,8 @@ class MainViewController: UITableViewController {
     
     private let videoArray = CategoryMovie.getCategory()
     
+    private let network = Networking.shared
+    
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.navigationBar.setupNavigationBar(barColor: .darkBackgound, textColor: .red)
         navigationItem.title = "Movie Dreams"
@@ -54,10 +56,11 @@ class MainViewController: UITableViewController {
 extension MainViewController: EventsCell {
     
     func didClick() {
-        let movieVC = MovieCardController()
-        movieVC.modalPresentationStyle = .fullScreen
-        movieVC.modalTransitionStyle = .crossDissolve
-        navigationController?.present(movieVC, animated: true)
+        network.fetchUrl(category: .trendingAll)
+//        let movieVC = MovieCardController()
+//        movieVC.modalPresentationStyle = .fullScreen
+//        movieVC.modalTransitionStyle = .crossDissolve
+//        navigationController?.present(movieVC, animated: true)
     }
 
 }
