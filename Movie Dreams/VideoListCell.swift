@@ -72,9 +72,14 @@ class VideoListCell: UITableViewCell {
     
     func configureCell(_ model: CategoryMovie) {
         movieCategories = model
-        nameLabel.text = model.name
+//        nameLabel.text = model.name
         nameLabel.textColor = .white
-        print(model)
+        
+    }
+    
+    func newConfigure(_ model: Categories) {
+        nameLabel.text = model.rawValue
+        nameLabel.textColor = .white
     }
     
 //        override func setSelected(_ selected: Bool, animated: Bool) {

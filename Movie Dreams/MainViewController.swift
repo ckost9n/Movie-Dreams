@@ -38,7 +38,7 @@ class MainViewController: UITableViewController {
 
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return videoArray.count
+        return Categories.allValues.count
     }
 
     
@@ -46,6 +46,8 @@ class MainViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: VideoListCell.identifier, for: indexPath) as! VideoListCell
         cell.cellDelegate = self
         let model = videoArray[indexPath.row]
+        let newModel = Categories.allValues[indexPath.row]
+        cell.newConfigure(newModel)
         cell.configureCell(model)
         
         return cell
