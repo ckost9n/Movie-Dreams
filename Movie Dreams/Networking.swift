@@ -64,7 +64,7 @@ struct Networking {
             let decodeData = try decoder.decode(MovieList.self, from: movieData)
             print(decodeData.results[0].title ?? "")
             print("---------")
-            print(decodeData.results[0].backdropPath)
+            print(decodeData.results[0].posterPath)
         } catch {
             print("Error decode \(error)")
         }

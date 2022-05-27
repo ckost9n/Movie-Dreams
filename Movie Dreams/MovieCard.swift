@@ -35,8 +35,13 @@ struct MovieCard {
     let continueVideo: String?
     let acterList: [Acter]?
     var image: UIImage {
-        let image = imageData != nil ? UIImage(data: imageData!)! : UIImage(named: "poster")!
-        return image
+//        let urlString = "https://image.tmdb.org/t/p/w500/6JjfSchsU6daXk2AKX8EEBjO3Fm.jpg"
+//        let url = URL(string: urlString)
+//        guard let data = try? Data(contentsOf: url!) else {
+//            return UIImage(named: "poster")!
+//        }
+//        return UIImage(data: data)!
+        return UIImage(named: "poster")!
     }
     
     init(name: String, date: Date) {
