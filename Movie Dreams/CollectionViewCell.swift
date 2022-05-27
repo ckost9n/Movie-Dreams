@@ -16,7 +16,7 @@ class CollectionViewCell: UICollectionViewCell {
     private let movieImgaView: UIImageView = {
        let imageView = UIImageView()
 //        imageView.image = UIImage(systemName: "house")
-        imageView.image = UIImage(named: "poster")
+//        imageView.image = UIImage(named: "poster")
 //        imageView.contentMode = .scaleToFill
         imageView.clipsToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -33,7 +33,7 @@ class CollectionViewCell: UICollectionViewCell {
     
     private let dateLabel: UILabel = {
        let label = UILabel()
-        label.text = Date().getDate()
+//        label.text = Date().getDate()
         label.textColor = .gray
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -55,8 +55,10 @@ class CollectionViewCell: UICollectionViewCell {
         movieImgaView.layer.cornerRadius = 15
     }
     
-    func configure(model: String) {
-        nameLabel.text = model
+    func configure(model: MovieCard) {
+        nameLabel.text = model.name
+        movieImgaView.image = model.image
+        dateLabel.text = model.date.getDate()
     }
     
     required init?(coder: NSCoder) {

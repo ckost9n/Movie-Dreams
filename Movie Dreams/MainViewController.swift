@@ -11,6 +11,8 @@ class MainViewController: UITableViewController {
     
     private let arryTest = ["Milk", "Bread", "Coffe"]
     
+    private let videoArray = CategoryMovie.getCategory()
+    
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.navigationBar.setupNavigationBar(barColor: .darkBackgound, textColor: .red)
         navigationItem.title = "Movie Dreams"
@@ -33,21 +35,15 @@ class MainViewController: UITableViewController {
     // MARK: - Table view data source
 
 
-//    override func numberOfSections(in tableView: UITableView) -> Int {
-//        // #warning Incomplete implementation, return the number of sections
-//        return 0
-//    }
-
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return arryTest.count
+        return videoArray.count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: VideoListCell.identifier, for: indexPath) as! VideoListCell
         cell.cellDelegate = self
-        let model = arryTest[indexPath.row]
+        let model = videoArray[indexPath.row]
         cell.configureCell(model)
         
         return cell
@@ -58,7 +54,6 @@ class MainViewController: UITableViewController {
 extension MainViewController: EventsCell {
     
     func didClick() {
-        print("TAP!!!!")
         let movieVC = MovieCardController()
         movieVC.modalPresentationStyle = .fullScreen
         movieVC.modalTransitionStyle = .crossDissolve

@@ -16,6 +16,8 @@ class VideoListCell: UITableViewCell {
     static let identifier = "VideListCell"
     
     weak var cellDelegate: EventsCell?
+    
+    private var movieCategories: CategoryMovie?
      
     private let nameLabel: UILabel = {
         let label = UILabel()
@@ -68,8 +70,9 @@ class VideoListCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configureCell(_ model: String) {
-        nameLabel.text = model
+    func configureCell(_ model: CategoryMovie) {
+        movieCategories = model
+        nameLabel.text = model.name
         nameLabel.textColor = .white
         print(model)
     }
@@ -108,9 +111,9 @@ extension VideoListCell: UICollectionViewDelegate, UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: CollectionViewCell.identifier,
             for: indexPath
-        )
-        
-        
+        ) as! CollectionViewCell
+        guard let model = movieCategories?.movies[indexPath.row] else { return cell }
+        cell.configure(model: model)
         return cell
     }
     
