@@ -11,9 +11,13 @@ class MainViewController: UITableViewController {
     
     private let arryTest = ["Milk", "Bread", "Coffe"]
     
-    private let videoArray = CategoryMovie.getCategory()
+    private lazy var network = Networking()
     
-    private let network = Networking.shared
+    private var movies: CategoryMovie?
+    
+    private var categories: [CategoryMovie] = []
+    
+    private let allCAtegories = Categories.allCases
     
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.navigationBar.setupNavigationBar(barColor: .darkBackgound, textColor: .red)
@@ -23,7 +27,16 @@ class MainViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
-        
+        for category in allCAtegories {
+            network.performRequest(category: category) { [weak self] categoryGet in
+                guard let self = self else { return }
+                DispatchQueue.main.async {
+                    self.categories.append(categoryGet)
+                    self.tableView.reloadData()
+                }
+                
+            }
+        }
     }
     
     private func setupViews() {
@@ -38,32 +51,35 @@ class MainViewController: UITableViewController {
 
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return Categories.allValues.count
+        return categories.count
     }
 
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: VideoListCell.identifier, for: indexPath) as! VideoListCell
         cell.cellDelegate = self
-        let model = videoArray[indexPath.row]
-        let newModel = Categories.allValues[indexPath.row]
-        cell.newConfigure(newModel)
-        cell.configureCell(model)
+
+        let category = categories[indexPath.row].name
+        let model = categories[indexPath.row].movies
+        
+        cell.configure(category, model: model)
         
         return cell
     }
 
 }
 
+
 extension MainViewController: EventsCell {
-    
-    func didClick() {
-        network.fetchUrl(category: .trendingAll)
+    func didClick(movie: MovieCard) {
+        print("-------")
+        let name = movie.name ?? "No name!!!"
+        print(name)
+        print("-------")
 //        let movieVC = MovieCardController()
 //        movieVC.modalPresentationStyle = .fullScreen
 //        movieVC.modalTransitionStyle = .crossDissolve
 //        navigationController?.present(movieVC, animated: true)
     }
-
+    
 }
 

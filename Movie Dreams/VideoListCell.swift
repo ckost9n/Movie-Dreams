@@ -8,7 +8,7 @@
 import UIKit
 
 protocol EventsCell: AnyObject {
-    func didClick()
+    func didClick(movie: MovieCard)
 }
 
 class VideoListCell: UITableViewCell {
@@ -17,7 +17,7 @@ class VideoListCell: UITableViewCell {
     
     weak var cellDelegate: EventsCell?
     
-    private var movieCategories: CategoryMovie?
+    private var movies: [MovieCard] = []
      
     private let nameLabel: UILabel = {
         let label = UILabel()
@@ -41,13 +41,11 @@ class VideoListCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
-        
+ 
         setDelegates()
         setupViews()
         setConstraints()
-        
-        
+    
     }
     
     private func setDelegates() {
@@ -70,16 +68,11 @@ class VideoListCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configureCell(_ model: CategoryMovie) {
-        movieCategories = model
-//        nameLabel.text = model.name
+    func configure(_ category: Categories, model: [MovieCard]) {
+        nameLabel.text = category.rawValue
         nameLabel.textColor = .white
         
-    }
-    
-    func newConfigure(_ model: Categories) {
-        nameLabel.text = model.rawValue
-        nameLabel.textColor = .white
+        movies = model
     }
     
 //        override func setSelected(_ selected: Bool, animated: Bool) {
@@ -117,18 +110,17 @@ extension VideoListCell: UICollectionViewDelegate, UICollectionViewDataSource {
             withReuseIdentifier: CollectionViewCell.identifier,
             for: indexPath
         ) as! CollectionViewCell
-        guard let model = movieCategories?.movies[indexPath.row] else { return cell }
+
+        let model = movies[indexPath.row]
         cell.configure(model: model)
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("Tap collection \(indexPath.row)")
-        cellDelegate?.didClick()
+        cellDelegate?.didClick(movie: movies[indexPath.row])
         
     }
-    
-    
     
 }
 

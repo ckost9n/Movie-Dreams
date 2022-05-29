@@ -7,66 +7,78 @@
 
 import Foundation
 
-enum Categories: String {
-    case trendingAll = "All Trend in week"
-    case tvPopular = "Popular TV"
-    case trendingMovie = "Trend Movie in week"
-    case tredingTv = "Trend TV in week"
+enum Categories: String, CaseIterable {
+    case trendingAllDay = "All Trend in day"
+    case trendingAllWeek = "All Trend in week"
+    case trendingMovieDay = "Trend Movie in day"
+    case trendingMovieWeek = "Trend Movie in week"
     
-    static let allValues = [trendingAll, tvPopular, trendingMovie, tredingTv]
+//    case tvPopular = "Popular TV"
+//    case tredingTv = "Trend TV in week"
+    
+//    static let allValues = [trendingAll, tvPopular, trendingMovie, tredingTv]
 }
 
 struct Networking {
     
     static var shared = Networking()
     
-    let movieUrl = "https://api.themoviedb.org/3/"
+    let movieUrl = "https://api.themoviedb.org/3"
     
     private let key = "?api_key=3180eef08dadb9ca352d50241ce95409"
     
-    func fetchUrl(category: Categories) {
+    func performRequest(category: Categories, completion: @escaping (CategoryMovie) -> Void)  {
+        
         let fullUrl: String
         switch category {
-        case .trendingAll: fullUrl = movieUrl + "/trending/all/week" + key
-        case .tvPopular: fullUrl = movieUrl + "/tv/popular" + key
-        case .trendingMovie: fullUrl = movieUrl + "/trending/movie/week" + key
-        case .tredingTv: fullUrl = movieUrl + "/trending/tv/week" + key
+        case .trendingAllDay: fullUrl = movieUrl + "/trending/all/day" + key
+        case .trendingAllWeek: fullUrl = movieUrl + "/trending/all/week" + key
+        case .trendingMovieDay: fullUrl = movieUrl + "/trending/movie/day" + key
+        case .trendingMovieWeek: fullUrl = movieUrl + "/trending/movie/week" + key
+//        case .tvPopular: fullUrl = movieUrl + "/tv/popular" + key
+//        case .tredingTv: fullUrl = movieUrl + "/trending/tv/week" + key
         }
-
-        performRequest(with: fullUrl)
-    }
-    
-    
-    
-    func performRequest(with urlString: String) {
         
-        guard let url = URL(string: urlString) else { return }
+        guard let url = URL(string: fullUrl) else { return }
         print(url)
         
         let session = URLSession(configuration: .default)
         
         let task = session.dataTask(with: url) { data, response, error in
             if error != nil {
-//                delegate?.didFailWithError(error: error!)
                 print("Error response, \(String(describing: error))")
                 return
             }
             guard let safeData = data else { return }
-            parseJSON(safeData)
+            guard let movieCategory = parseJSON(safeData, category) else { return }
+            completion(movieCategory)
         }
         
         task.resume()
     }
     
-    func parseJSON(_ movieData: Data) {
+    func parseJSON(_ movieData: Data, _ category: Categories) -> CategoryMovie? {
         let decoder = JSONDecoder()
         do {
             let decodeData = try decoder.decode(MovieList.self, from: movieData)
-            print(decodeData.results[0].title ?? "")
-            print("---------")
-            print(decodeData.results[0].posterPath)
+            let movieList = decodeData.results
+            var movies: [MovieCard] = []
+            for movie in movieList {
+                let newMovie = MovieCard(
+                    name: movie.name ?? movie.title,
+                    posterString: movie.posterPath,
+                    backdropString: movie.backdropPath,
+                    dateString: movie.releaseDate ?? movie.firstAirDate,
+                    star: movie.voteAverage,
+                    description: movie.overview
+                )
+                movies.append(newMovie)
+            }
+            let categoryMovie = CategoryMovie(name: category, movies: movies)
+            return categoryMovie
         } catch {
-            print("Error decode \(error)")
+            print("Error with parse")
+            return nil
         }
     }
 }
