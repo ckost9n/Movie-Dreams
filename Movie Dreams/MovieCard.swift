@@ -97,7 +97,7 @@ struct MovieCard {
     }
 }
 
-struct Acter {
+struct Actor {
     let name: String
     let chareckter: String
     let imageData: Data?

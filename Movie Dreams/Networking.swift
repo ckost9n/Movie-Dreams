@@ -13,13 +13,13 @@ enum Categories: String, CaseIterable {
     case trendingMovieDay = "Trend Movie in day"
     case trendingMovieWeek = "Trend Movie in week"
     
-//    case tvPopular = "Popular TV"
-//    case tredingTv = "Trend TV in week"
+    //    case tvPopular = "Popular TV"
+    //    case tredingTv = "Trend TV in week"
     
-//    static let allValues = [trendingAll, tvPopular, trendingMovie, tredingTv]
+    //    static let allValues = [trendingAll, tvPopular, trendingMovie, tredingTv]
 }
 
-struct Networking {
+class Networking {
     
     static var shared = Networking()
     
@@ -35,8 +35,8 @@ struct Networking {
         case .trendingAllWeek: fullUrl = movieUrl + "/trending/all/week" + key
         case .trendingMovieDay: fullUrl = movieUrl + "/trending/movie/day" + key
         case .trendingMovieWeek: fullUrl = movieUrl + "/trending/movie/week" + key
-//        case .tvPopular: fullUrl = movieUrl + "/tv/popular" + key
-//        case .tredingTv: fullUrl = movieUrl + "/trending/tv/week" + key
+            //        case .tvPopular: fullUrl = movieUrl + "/tv/popular" + key
+            //        case .tredingTv: fullUrl = movieUrl + "/trending/tv/week" + key
         }
         
         guard let url = URL(string: fullUrl) else { return }
@@ -44,13 +44,13 @@ struct Networking {
         
         let session = URLSession(configuration: .default)
         
-        let task = session.dataTask(with: url) { data, response, error in
+        let task = session.dataTask(with: url) { data, _, error in
             if error != nil {
-                print("Error response, \(String(describing: error))")
+                print("Error response, \(String(describing: error?.localizedDescription))")
                 return
             }
             guard let safeData = data else { return }
-            guard let movieCategory = parseJSON(safeData, category) else { return }
+            guard let movieCategory = self.parseJSON(safeData, category) else { return }
             completion(movieCategory)
         }
         
@@ -77,7 +77,7 @@ struct Networking {
             let categoryMovie = CategoryMovie(name: category, movies: movies)
             return categoryMovie
         } catch {
-            print("Error with parse")
+            print(error.localizedDescription)
             return nil
         }
     }

@@ -75,10 +75,10 @@ extension MainViewController: EventsCell {
         let name = movie.name ?? "No name!!!"
         print(name)
         print("-------")
-//        let movieVC = MovieCardController()
-//        movieVC.modalPresentationStyle = .fullScreen
-//        movieVC.modalTransitionStyle = .crossDissolve
-//        navigationController?.present(movieVC, animated: true)
+        let movieVC = MovieCardController()
+        movieVC.modalPresentationStyle = .popover
+        movieVC.modalTransitionStyle = .crossDissolve
+        navigationController?.present(movieVC, animated: true)
     }
     
 }

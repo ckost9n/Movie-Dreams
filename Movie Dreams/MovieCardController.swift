@@ -8,12 +8,8 @@
 import UIKit
 
 class MovieCardController: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        initialize()
-    }
     
+    //MARK: - interface Properties
     let posterView: UIImageView = {
         $0.image = UIImage(named: "poster")
         $0.contentMode = .scaleAspectFill
@@ -60,16 +56,26 @@ class MovieCardController: UIViewController {
         $0.textColor = .white
         return $0
     }(UILabel())
-    
-    
 
+    //MARK: - Life cycle
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        initialize()
+    }
+    
+    //MARK: - initialize subview's and constraints
     func initialize() {
-        view.addSubview(posterView)
         view.backgroundColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+        view.addSubview(posterView)
         
         posterView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         posterView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         posterView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         posterView.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        
+        view.addSubview(movieTitle)
+        
+        movieTitle.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        movieTitle.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
     }
 }
