@@ -19,6 +19,12 @@ class MainViewController: UITableViewController {
     
     private let allCAtegories = Categories.allCases
     
+    private let searchController = UISearchController()
+    
+    private var filterCategories: [CategoryMovie] = []
+    
+    private var isFiltering = false
+    
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.navigationBar.setupNavigationBar(barColor: .darkBackgound, textColor: .red)
         navigationItem.title = "Movie Dreams"
@@ -44,7 +50,7 @@ class MainViewController: UITableViewController {
         tableView.rowHeight = 300
         tableView.separatorStyle = .none
         view.backgroundColor = .darkBackgound
-        
+        navigationItem.searchController = searchController
     }
     
     // MARK: - Table view data source
