@@ -23,7 +23,6 @@ class MainTabBarController: UITabBarController {
         viewControllers = [mainVC, movieCardVC]
         tabBar.barTintColor = .darkBackgound
         tabBar.tintColor = .red
-//        tabBar.
         
         let layer = CAShapeLayer()
         layer.path = UIBezierPath(
