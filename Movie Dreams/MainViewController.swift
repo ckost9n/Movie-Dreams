@@ -11,7 +11,7 @@ class MainViewController: UITableViewController {
     
     private let arryTest = ["Milk", "Bread", "Coffe"]
     
-    private lazy var network = Networking()
+    private lazy var compareModel = CompareModel()
     
     private var movies: CategoryMovie?
     
@@ -34,13 +34,11 @@ class MainViewController: UITableViewController {
         super.viewDidLoad()
         setupViews()
         for category in allCAtegories {
-            network.performRequest(category: category) { [weak self] categoryGet in
+            compareModel.getMovieLists(category: category) { [weak self] categoryGet in
                 guard let self = self else { return }
-                DispatchQueue.main.async {
-                    self.categories.append(categoryGet)
-                    self.tableView.reloadData()
-                }
-                
+                guard let categoryMovie = categoryGet else { return }
+                self.categories.append(categoryMovie)
+                self.tableView.reloadData()
             }
         }
     }
@@ -77,14 +75,14 @@ class MainViewController: UITableViewController {
 
 extension MainViewController: EventsCell {
     func didClick(movie: MovieCard) {
-        print("-------")
+//        print("-------")
         let name = movie.name ?? "No name!!!"
-        print(name)
-        print("-------")
-//        let movieVC = MovieCardController()
-//        movieVC.modalPresentationStyle = .fullScreen
-//        movieVC.modalTransitionStyle = .crossDissolve
-//        navigationController?.present(movieVC, animated: true)
+//        print(name)
+//        print("-------")
+        let movieVC = MovieCardController()
+        movieVC.modalPresentationStyle = .fullScreen
+        movieVC.modalTransitionStyle = .crossDissolve
+        navigationController?.present(movieVC, animated: true)
     }
     
 }
