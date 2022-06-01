@@ -77,17 +77,10 @@ extension MainViewController: EventsCell {
     func didClick(movie: MovieCard) {
 //        print("-------")
         let name = movie.name ?? "No name!!!"
-<<<<<<< HEAD
-        print(name)
-        print("-------")
-        let movieVC = MovieCardController()
-        movieVC.modalPresentationStyle = .popover
-=======
 //        print(name)
 //        print("-------")
         let movieVC = MovieCardController()
         movieVC.modalPresentationStyle = .fullScreen
->>>>>>> main
         movieVC.modalTransitionStyle = .crossDissolve
         navigationController?.present(movieVC, animated: true)
     }
