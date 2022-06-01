@@ -15,6 +15,7 @@ class CompareModel {
     }
     
     func getMovieLists(category: Categories, completion: @escaping (CategoryMovie?) -> Void) {
+        
         dataFetcherService.fetchData(category: category) { decodeData in
             guard let movieList = decodeData?.results else { return }
             var movies: [MovieCard] = []

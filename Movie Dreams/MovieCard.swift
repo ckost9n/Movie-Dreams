@@ -17,10 +17,10 @@ struct MovieCard {
     let posterString: String?
     let backdropString: String?
     let dateString: String?
-
+    
     let star: Double?
     let description: String?
-
+    
     var posterUrl: String? {
         guard posterString != nil else { return nil }
         return "https://image.tmdb.org/t/p/w500/" + (self.posterString ?? "")
@@ -50,29 +50,16 @@ struct MovieCard {
     
     init(name: String) {
         self.name = name
-
+        
         posterString = nil
         backdropString = nil
         dateString = nil
-
+        
         star = nil
         description = nil
-
+        
     }
     
-    static func getFake() -> [MovieCard] {
-        var movies: [MovieCard] = []
-        movies = [
-            MovieCard(name: "Wonder Women"),
-            MovieCard(name: "Betmen"),
-            MovieCard(name: "Spider-Man"),
-            MovieCard(name: "Men in Black"),
-            MovieCard(name: "Halo"),
-            MovieCard(name: "Star Wars"),
-            MovieCard(name: "Alfa")
-        ]
-        return movies
-    }
 }
 
 struct Actor {

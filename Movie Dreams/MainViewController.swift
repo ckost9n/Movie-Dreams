@@ -82,7 +82,7 @@ extension MainViewController: EventsCell {
         let movieVC = MovieCardController()
 
         movieVC.modalPresentationStyle = .popover
-        movieVC.modalTransitionStyle = .crossDissolve
+        movieVC.modalTransitionStyle = .coverVertical
 
         navigationController?.present(movieVC, animated: true)
     }

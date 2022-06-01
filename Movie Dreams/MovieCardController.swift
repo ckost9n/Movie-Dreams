@@ -53,7 +53,7 @@ class MovieCardController: UIViewController {
     
     
     //MARK: - Buttons
-    private let closeButton: UIButton = {
+    private lazy var closeButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(UIImage(systemName: "chevron.backward"), for: .normal)
         button.tintColor = .white
@@ -64,7 +64,7 @@ class MovieCardController: UIViewController {
         return button
     }()
     
-    private let addFavoriteButton: UIButton = {
+    private lazy var addFavoriteButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(UIImage(systemName: "bookmark"), for: .normal)
         button.tintColor = .white
@@ -75,7 +75,7 @@ class MovieCardController: UIViewController {
         return button
     }()
     
-    private let watchNowButton: UIButton = {
+    private lazy var watchNowButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Watch Now", for: .normal)
         button.layer.cornerRadius = 10
