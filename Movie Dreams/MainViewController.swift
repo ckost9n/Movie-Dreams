@@ -63,7 +63,7 @@ class MainViewController: UITableViewController {
         cell.cellDelegate = self
 
         let category = categories[indexPath.row].name
-        let model = categories[indexPath.row].movies
+        let model = isFiltering ? filterCategories[indexPath.row].movies : categories[indexPath.row].movies
         
         cell.configure(category, model: model)
         
