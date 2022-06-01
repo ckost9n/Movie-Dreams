@@ -11,13 +11,19 @@ class MainViewController: UITableViewController {
     
     private let arryTest = ["Milk", "Bread", "Coffe"]
     
-    private lazy var network = Networking()
+    private lazy var compareModel = CompareModel()
     
     private var movies: CategoryMovie?
     
     private var categories: [CategoryMovie] = []
     
     private let allCAtegories = Categories.allCases
+    
+    private let searchController = UISearchController()
+    
+    private var filterCategories: [CategoryMovie] = []
+    
+    private var isFiltering = false
     
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.navigationBar.setupNavigationBar(barColor: .darkBackgound, textColor: .red)
@@ -28,13 +34,11 @@ class MainViewController: UITableViewController {
         super.viewDidLoad()
         setupViews()
         for category in allCAtegories {
-            network.performRequest(category: category) { [weak self] categoryGet in
+            compareModel.getMovieLists(category: category) { [weak self] categoryGet in
                 guard let self = self else { return }
-                DispatchQueue.main.async {
-                    self.categories.append(categoryGet)
-                    self.tableView.reloadData()
-                }
-                
+                guard let categoryMovie = categoryGet else { return }
+                self.categories.append(categoryMovie)
+                self.tableView.reloadData()
             }
         }
     }
@@ -44,7 +48,7 @@ class MainViewController: UITableViewController {
         tableView.rowHeight = 300
         tableView.separatorStyle = .none
         view.backgroundColor = .darkBackgound
-        
+        navigationItem.searchController = searchController
     }
     
     // MARK: - Table view data source
@@ -59,7 +63,7 @@ class MainViewController: UITableViewController {
         cell.cellDelegate = self
 
         let category = categories[indexPath.row].name
-        let model = categories[indexPath.row].movies
+        let model = isFiltering ? filterCategories[indexPath.row].movies : categories[indexPath.row].movies
         
         cell.configure(category, model: model)
         
@@ -71,13 +75,15 @@ class MainViewController: UITableViewController {
 
 extension MainViewController: EventsCell {
     func didClick(movie: MovieCard) {
-        print("-------")
+//        print("-------")
         let name = movie.name ?? "No name!!!"
-        print(name)
-        print("-------")
+//        print(name)
+//        print("-------")
         let movieVC = MovieCardController()
+
         movieVC.modalPresentationStyle = .popover
-        movieVC.modalTransitionStyle = .coverVertical
+        movieVC.modalTransitionStyle = .crossDissolve
+
         navigationController?.present(movieVC, animated: true)
     }
     
