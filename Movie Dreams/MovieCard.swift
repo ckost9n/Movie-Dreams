@@ -9,7 +9,7 @@ import UIKit
 
 struct CategoryMovie {
     let name: Categories
-    let movies: [MovieCard]
+    var movies: [MovieCard]
     
 //    static func getCategory() -> [CategoryMovie] {
 //        var categories: [CategoryMovie] = []

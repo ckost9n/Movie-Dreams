@@ -71,13 +71,16 @@ class VideoListCell: UITableViewCell {
     func configure(_ category: Categories, model: [MovieCard]) {
         nameLabel.text = category.rawValue
         nameLabel.textColor = .white
-        
+
         movies = model
+        
+        //перезагружаем myCollectionView, так как у нас обновилось кол-во фильмов в колекции, после configure()
+        myCollectionView.reloadData()
     }
     
 //        override func setSelected(_ selected: Bool, animated: Bool) {
 //            super.setSelected(selected, animated: animated)
-//    
+//
 //            // Configure the view for the selected state
 //        }
         
@@ -102,7 +105,8 @@ extension VideoListCell: UICollectionViewDelegateFlowLayout {
 extension VideoListCell: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        
+        return movies.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
