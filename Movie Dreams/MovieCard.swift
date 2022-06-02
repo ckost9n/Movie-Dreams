@@ -17,7 +17,6 @@ struct MovieCard {
     let posterString: String?
     let backdropString: String?
     let dateString: String?
-    
     let star: Double?
     let description: String?
     
@@ -25,17 +24,17 @@ struct MovieCard {
         guard posterString != nil else { return nil }
         return "https://image.tmdb.org/t/p/w500/" + (self.posterString ?? "")
     }
+    
     var backdorURL: String? {
         guard backdropString != nil else { return nil }
         return "https://image.tmdb.org/t/p/w500/" + (self.backdropString ?? "")
     }
+    
     var imagePoster: UIImage {
-        
         return UIImage(named: "poster")!
     }
     
     var imageBackdor: UIImage {
-        
         return UIImage(named: "poster")!
     }
     
@@ -50,14 +49,11 @@ struct MovieCard {
     
     init(name: String) {
         self.name = name
-        
         posterString = nil
         backdropString = nil
         dateString = nil
-        
         star = nil
         description = nil
-        
     }
     
 }

@@ -95,7 +95,7 @@ class MovieCardController: UIViewController {
         setConstrains()
     }
     
-    //MARK: - Privat Properties
+    //MARK: - Private Properties
     @objc private func closeButtonTapped(_ sender: UIButton) {
         self.dismiss(animated: true)
     }

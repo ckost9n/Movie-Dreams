@@ -149,8 +149,8 @@
 			isa = PBXGroup;
 			children = (
 				3C7657D428472C530041D53E /* NetworkService.swift */,
-				3C7657D528472C540041D53E /* NetworkDataFetcher.swift */,
 				3C7657D628472C540041D53E /* DataFetcherService.swift */,
+				3C7657D528472C540041D53E /* NetworkDataFetcher.swift */,
 				3C31D21F28477B89001DD3AE /* CompareModel.swift */,
 			);
 			name = Networking;

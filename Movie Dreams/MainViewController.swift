@@ -75,10 +75,10 @@ class MainViewController: UITableViewController {
 
 extension MainViewController: EventsCell {
     func didClick(movie: MovieCard) {
-//        print("-------")
+        print("-------")
         let name = movie.name ?? "No name!!!"
-//        print(name)
-//        print("-------")
+        print(name)
+        print("-------")
         let movieVC = MovieCardController()
 
         movieVC.modalPresentationStyle = .popover
@@ -86,6 +86,5 @@ extension MainViewController: EventsCell {
 
         navigationController?.present(movieVC, animated: true)
     }
-    
 }
 
