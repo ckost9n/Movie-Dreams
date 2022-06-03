@@ -13,7 +13,7 @@ class CompareModel {
     init(dataFetcherService: DataFetcherService = DataFetcherService()) {
         self.dataFetcherService = dataFetcherService
     }
-    
+    // Get lists of movies define by categories
     func getMovieLists(category: Categories, completion: @escaping (CategoryMovie?) -> Void) {
         
         dataFetcherService.fetchData(category: category) { decodeData in
@@ -26,12 +26,29 @@ class CompareModel {
                     backdropString: movie.backdropPath,
                     dateString: movie.releaseDate ?? movie.firstAirDate,
                     star: movie.voteAverage,
-                    description: movie.overview
+                    description: movie.overview,
+                    id: movie.id
                 )
                 movies.append(newMovie)
             }
             let categoryMovie = CategoryMovie(name: category, movies: movies)
             completion(categoryMovie)
+        }
+    }
+    // Get chosen movie by id
+    func getMovie(withId id: Int, completion: @escaping (DetailMovieCard?) -> Void) {
+        
+        dataFetcherService.fetchMovieData(withId: id) { decodeData in
+            guard let movie = decodeData else { return }
+            let newMovie = DetailMovieCard(originalTitle: movie.originalTitle,
+                                           backdropPath: movie.backdropPath,
+                                           overview: movie.overview,
+                                           releaseDate: movie.releaseDate,
+                                           runtime: movie.runtime,
+                                           homepage: movie.homepage
+            )
+            completion(newMovie)
+            
         }
     }
 }

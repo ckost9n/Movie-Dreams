@@ -53,7 +53,7 @@ class CollectionViewCell: UICollectionViewCell {
         movieImgaView.layer.cornerRadius = 15
     }
     
-    func configure(model: MovieCard) {
+    func configureCollectionCell(model: MovieCard) {
         nameLabel.text = model.name
         dateLabel.text = model.dateString
         

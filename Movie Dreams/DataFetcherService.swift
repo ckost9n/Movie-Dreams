@@ -30,7 +30,7 @@ class DataFetcherService {
     init(dataFetcher: DataFetcher = NetworkDataFetcher()) {
         self.dataFetcher = dataFetcher
     }
-    
+    //Fetch Data with categories
     func fetchData(category: Categories, completion: @escaping (MovieList?) -> Void) {
         let fullUrl: String
         
@@ -43,7 +43,11 @@ class DataFetcherService {
     //        case .tredingTv: fullUrl = movieUrl + "/trending/tv/week" + key
         }
         dataFetcher.fetchGnericJSONData(urlString: fullUrl, response: completion)
-        
+    }
+    //Fetch Data for the chosen movie
+    func fetchMovieData(withId id: Int, completion: @escaping (DetailMovieData?) -> Void) {
+        let fullUrl = "\(movieUrl)/movie/\(id)\(key)"
+        dataFetcher.fetchGnericJSONData(urlString: fullUrl, response: completion)
     }
     
 }

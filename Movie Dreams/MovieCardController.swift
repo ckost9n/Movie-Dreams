@@ -11,7 +11,7 @@ import UIKit
 class MovieCardController: UIViewController {
     
     //MARK: - Public Properties
-    var movieName: String?
+    var movieId: Int?
     
     //MARK: - Interface Elements
     private let posterView: UIImageView = {
@@ -23,7 +23,9 @@ class MovieCardController: UIViewController {
     
     private let movieTitle: UILabel = {
         $0.text = "Pulp Fiction"
+        $0.numberOfLines = 2
         $0.font = UIFont.boldSystemFont(ofSize: 30)
+        $0.minimumScaleFactor = 0.5
         $0.textAlignment = .center
         $0.textColor = .white
         $0.translatesAutoresizingMaskIntoConstraints = false
@@ -31,20 +33,21 @@ class MovieCardController: UIViewController {
     }(UILabel())
     
     private let movieSubTitle: UILabel = {
-        $0.text = "1994" + " * " + "Thriller, Criminal" + " * " + "2h 34m"
+        $0.text = "1994 * Thriller, Criminal * 2h 34m"
         $0.font = UIFont.systemFont(ofSize: 20)
         $0.textColor = .white
         $0.translatesAutoresizingMaskIntoConstraints = false
         return $0
     }(UILabel())
     
-    private let starRatingView = StarRatingView()
-    
-    private let castActorView = CastActorView()
+    private lazy var starRatingView = StarRatingView()
+    private lazy var castActorView = CastActorView()
+    private lazy var compareModel = CompareModel()
     
     private let rewievLabel: UILabel = {
         $0.text = "Двое бандитов Винсент Вега и Джулс Винфилд проводят время в философских беседах в перерыве между разборками и «решением проблем» с должниками своего криминального босса Марселласа Уоллеса. Параллельно разворачивается три истории. В первой из них Винсент присматривает за женой Марселласа Мией и спасает ее от передозировки наркотиков. Во второй рассказывается о Бутче Кулидже, боксере, нанятом Уоллесом, чтобы сдать бой, но обманувшим его."
-        $0.font = UIFont.systemFont(ofSize: 15)
+        $0.font = UIFont.systemFont(ofSize: 18)
+        $0.minimumScaleFactor = 0.8
         $0.textColor = .white
         $0.numberOfLines = 0
         $0.translatesAutoresizingMaskIntoConstraints = false
@@ -93,6 +96,14 @@ class MovieCardController: UIViewController {
         super.viewDidLoad()
         setupViews()
         setConstrains()
+        guard let unwrappedId = movieId else { return }
+        compareModel.getMovie(withId: unwrappedId) { [weak self] movieGet in
+            guard let self = self else { return }
+            guard let unwrappedMovie = movieGet else { return }
+            print(unwrappedMovie)
+            self.configureMovieCard(model: unwrappedMovie)
+
+        }
     }
     
     //MARK: - Private Properties
@@ -122,7 +133,21 @@ class MovieCardController: UIViewController {
         view.addSubview(watchNowButton)
     }
     
-
+    //MARK: - configureMovieCard elements
+    //Set properties from downloaded model to interface elements
+    func configureMovieCard(model: DetailMovieCard) {
+        //Set image to poster view
+        guard let unwrappedBackdrop = model.backdropPath else { return }
+        self.posterView.downloaded(from: unwrappedBackdrop)
+        //Set movie name to movieTitle label
+        self.movieTitle.text = model.originalTitle
+        //Set information to moviewSubTitle label in format: "year * genre * duration"
+        guard let unwrappedDate = model.releaseDate else { return }
+        let movieYear = unwrappedDate.prefix(4)
+        self.movieSubTitle.text = movieYear + " * "
+        //Set description to rewievLabel
+        self.rewievLabel.text = model.overview
+    }
     
 }
 
@@ -154,7 +179,8 @@ extension MovieCardController {
         //Constraints for movieTitle
         NSLayoutConstraint.activate([
             movieTitle.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            movieTitle.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+            movieTitle.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            movieTitle.widthAnchor.constraint(equalToConstant: view.frame.width * 0.8)
         ])
         //Constraints for movieSubTitle
         NSLayoutConstraint.activate([
@@ -177,7 +203,7 @@ extension MovieCardController {
         ])
         //Constraints for castActorView
         NSLayoutConstraint.activate([
-            castActorView.topAnchor.constraint(equalTo: rewievLabel.bottomAnchor),
+            castActorView.heightAnchor.constraint(equalToConstant: view.frame.height / 10),
             castActorView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             castActorView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             castActorView.bottomAnchor.constraint(equalTo: watchNowButton.topAnchor)

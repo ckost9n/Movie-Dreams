@@ -80,7 +80,7 @@ extension MainViewController: EventsCell {
         print(name)
         print("-------")
         let movieVC = MovieCardController()
-
+        movieVC.movieId = movie.id
         movieVC.modalPresentationStyle = .popover
         movieVC.modalTransitionStyle = .coverVertical
 

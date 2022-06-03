@@ -112,7 +112,7 @@ extension VideoListCell: UICollectionViewDelegate, UICollectionViewDataSource {
         ) as! CollectionViewCell
 
         let model = movies[indexPath.row]
-        cell.configure(model: model)
+        cell.configureCollectionCell(model: model)
         return cell
     }
     

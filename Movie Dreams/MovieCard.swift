@@ -19,6 +19,7 @@ struct MovieCard {
     let dateString: String?
     let star: Double?
     let description: String?
+    let id: Int?
     
     var posterUrl: String? {
         guard posterString != nil else { return nil }
@@ -38,13 +39,14 @@ struct MovieCard {
         return UIImage(named: "poster")!
     }
     
-    init(name: String?, posterString: String, backdropString: String?, dateString: String?, star: Double?, description: String?) {
+    init(name: String?, posterString: String, backdropString: String?, dateString: String?, star: Double?, description: String?, id: Int?) {
         self.name = name
         self.posterString = posterString
         self.backdropString = backdropString
         self.dateString = dateString
         self.star = star
         self.description = description
+        self.id = id
     }
     
     init(name: String) {
@@ -54,6 +56,7 @@ struct MovieCard {
         dateString = nil
         star = nil
         description = nil
+        id = nil
     }
     
 }
