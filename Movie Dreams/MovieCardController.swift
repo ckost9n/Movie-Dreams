@@ -34,7 +34,7 @@ class MovieCardController: UIViewController {
     
     private let movieSubTitle: UILabel = {
         $0.text = "1994 * Thriller, Criminal * 2h 34m"
-        $0.font = UIFont.systemFont(ofSize: 20)
+        $0.font = UIFont.systemFont(ofSize: 16)
         $0.textColor = .white
         $0.translatesAutoresizingMaskIntoConstraints = false
         return $0
@@ -46,8 +46,8 @@ class MovieCardController: UIViewController {
     
     private let rewievLabel: UILabel = {
         $0.text = "Двое бандитов Винсент Вега и Джулс Винфилд проводят время в философских беседах в перерыве между разборками и «решением проблем» с должниками своего криминального босса Марселласа Уоллеса. Параллельно разворачивается три истории. В первой из них Винсент присматривает за женой Марселласа Мией и спасает ее от передозировки наркотиков. Во второй рассказывается о Бутче Кулидже, боксере, нанятом Уоллесом, чтобы сдать бой, но обманувшим его."
-        $0.font = UIFont.systemFont(ofSize: 18)
-        $0.minimumScaleFactor = 0.8
+        $0.font = UIFont.systemFont(ofSize: 16)
+        $0.minimumScaleFactor = 0.5
         $0.textColor = .white
         $0.numberOfLines = 0
         $0.translatesAutoresizingMaskIntoConstraints = false
@@ -95,15 +95,10 @@ class MovieCardController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
-        setConstrains()
-        guard let unwrappedId = movieId else { return }
-        compareModel.getMovie(withId: unwrappedId) { [weak self] movieGet in
-            guard let self = self else { return }
-            guard let unwrappedMovie = movieGet else { return }
-            print(unwrappedMovie)
-            self.configureMovieCard(model: unwrappedMovie)
-
-        }
+        setupConstrains()
+        setupData()
+        
+        
     }
     
     //MARK: - Private Properties
@@ -133,34 +128,45 @@ class MovieCardController: UIViewController {
         view.addSubview(watchNowButton)
     }
     
+    //MARK: - <#Section Header#>
+    func setupData() {
+        guard let unwrappedId = movieId else { return }
+        compareModel.getMovie(withId: unwrappedId) { [weak self] movieGet in
+            guard let self = self else { return }
+            guard let unwrappedMovie = movieGet else { return }
+            self.configureMovieCard(model: unwrappedMovie)
+        }
+        
+    }
     //MARK: - configureMovieCard elements
     //Set properties from downloaded model to interface elements
     func configureMovieCard(model: DetailMovieCard) {
         //Set image to poster view
-        guard let unwrappedBackdrop = model.backdropPath else { return }
-        self.posterView.downloaded(from: unwrappedBackdrop)
+        guard let unwrappedBackdrop = model.backdropURL else { return }
+        self.posterView.downloaded(from: unwrappedBackdrop, contentMode: .scaleAspectFill)
         //Set movie name to movieTitle label
         self.movieTitle.text = model.originalTitle
         //Set information to moviewSubTitle label in format: "year * genre * duration"
         guard let unwrappedDate = model.releaseDate else { return }
         let movieYear = unwrappedDate.prefix(4)
-        self.movieSubTitle.text = movieYear + " * "
+        self.movieSubTitle.text = movieYear + "*" + model.getGenres().dropLast() + "*" + model.getRunTime()
         //Set description to rewievLabel
         self.rewievLabel.text = model.overview
     }
+    
     
 }
 
 //MARK: - NSLayoutConstraint
 extension MovieCardController {
     
-    private func setConstrains() {
+    private func setupConstrains() {
         //Constraints for posterView
         NSLayoutConstraint.activate([
             posterView.topAnchor.constraint(equalTo: view.topAnchor),
             posterView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             posterView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            posterView.heightAnchor.constraint(equalToConstant: view.frame.height / 2.5)
+            posterView.heightAnchor.constraint(equalToConstant: view.frame.height / 2)
         ])
         //Constraints for addFavoriteButton
         NSLayoutConstraint.activate([
@@ -199,7 +205,8 @@ extension MovieCardController {
         NSLayoutConstraint.activate([
             rewievLabel.topAnchor.constraint(equalTo: starRatingView.bottomAnchor, constant: 5),
             rewievLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 5),
-            rewievLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -5)
+            rewievLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -5),
+            rewievLabel.bottomAnchor.constraint(equalTo: castActorView.topAnchor, constant: 5)
         ])
         //Constraints for castActorView
         NSLayoutConstraint.activate([

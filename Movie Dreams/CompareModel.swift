@@ -45,7 +45,8 @@ class CompareModel {
                                            overview: movie.overview,
                                            releaseDate: movie.releaseDate,
                                            runtime: movie.runtime,
-                                           homepage: movie.homepage
+                                           homepage: movie.homepage,
+                                           genres: movie.genres
             )
             completion(newMovie)
             
