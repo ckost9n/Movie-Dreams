@@ -40,12 +40,11 @@ class MainViewController: UITableViewController {
         for category in allCAtegories {
             compareModel.getMovieLists(category: category) { [weak self] categoryGet in
                 guard let self = self else { return }
-                                                            
-                DispatchQueue.main.async {
-                    self.categories.append(categoryGet)
-                    self.tableView.reloadData()
-                }
-
+       
+                guard let categoryGet = categoryGet else { return }
+                self.categories.append(categoryGet)
+                self.tableView.reloadData()
+    
             }
         }
     }
@@ -83,9 +82,11 @@ class MainViewController: UITableViewController {
         // заполнение model фильтрованным или полным списком фильмов
         if isFiltering {
             category = filterCategories[indexPath.row].name
+            print(category.rawValue)
             model = filterCategories[indexPath.row].movies
         } else {
             category = categories[indexPath.row].name
+            print(category.rawValue)
             model = categories[indexPath.row].movies
         }
 
@@ -125,12 +126,12 @@ class MainViewController: UITableViewController {
 extension MainViewController: EventsCell {
     func didClick(movie: MovieCard) {
 //        print("-------")
-        let name = movie.name ?? "No name!!!"
+//        let name = movie.name ?? "No name!!!"
 //        print(name)
 //        print("-------")
         let movieVC = MovieCardController()
 
-        movieVC.modalPresentationStyle = .popover
+        movieVC.modalPresentationStyle = .fullScreen
         movieVC.modalTransitionStyle = .crossDissolve
 
         navigationController?.present(movieVC, animated: true)
