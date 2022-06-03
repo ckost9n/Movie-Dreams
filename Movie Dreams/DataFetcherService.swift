@@ -50,7 +50,7 @@ class DataFetcherService {
         dataFetcher.fetchGnericJSONData(urlString: fullUrl, response: completion)
     }
     
-    func fetchCreditsData(with id: Int, completion: @escaping (DetailCreditsData?) -> Void) {
+    func fetchCreditsData(withId id: Int, completion: @escaping (DetailCreditsData?) -> Void) {
         let fullUrl = "\(movieUrl)/movie/\(id)/credits\(key)"
         dataFetcher.fetchGnericJSONData(urlString: fullUrl, response: completion)
     }

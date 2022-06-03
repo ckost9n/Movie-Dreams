@@ -128,13 +128,25 @@ class MovieCardController: UIViewController {
         view.addSubview(watchNowButton)
     }
     
-    //MARK: - <#Section Header#>
+    //MARK: - Fetch data for selected movie
     func setupData() {
         guard let unwrappedId = movieId else { return }
+        // .getMovie fetcher get information aboult movie: poster, title, review, rating, etc...
         compareModel.getMovie(withId: unwrappedId) { [weak self] movieGet in
             guard let self = self else { return }
             guard let unwrappedMovie = movieGet else { return }
             self.configureMovieCard(model: unwrappedMovie)
+        }
+        // .getCast fetcher get information aboult cast: actor's name, character name and URL-path of portrait
+        compareModel.getCast(with: unwrappedId) { [weak self] castGet in
+            guard let self = self else { return }
+            guard let unwrappedCast = castGet else { return }
+            for actor in unwrappedCast.cast {
+                print(actor.name)
+                print(actor.character)
+                print(actor.profilePath)
+                print("-------------------")
+            }
         }
         
     }

@@ -35,7 +35,7 @@ class CompareModel {
             completion(categoryMovie)
         }
     }
-    // Get chosen movie by id
+    // Get selected movie by id
     func getMovie(withId id: Int, completion: @escaping (DetailMovieCard?) -> Void) {
         
         dataFetcherService.fetchMovieData(withId: id) { decodeData in
@@ -49,7 +49,23 @@ class CompareModel {
                                            genres: movie.genres
             )
             completion(newMovie)
-            
+        }
+    }
+    // Get actor cast from selected movie by id
+    func getCast(with id: Int, completion: @escaping (DetailCreditsCard?) -> Void) {
+        
+        dataFetcherService.fetchCreditsData(withId: id) { decodeData in
+            guard let castList = decodeData?.credits else { return }
+            var actors: [CastList] = []
+            for actor in castList {
+                let newActor = CastList(name: actor.name ?? actor.originalName,
+                                        character: actor.character,
+                                        profilePath: actor.profilePath
+                )
+                actors.append(newActor)
+            }
+            let detailCreditsCard = DetailCreditsCard(cast: actors)
+            completion(detailCreditsCard)
         }
     }
 }

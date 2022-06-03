@@ -35,7 +35,6 @@ struct DetailMovieCard {
     // Method conwert runtime from "150" to "2h30min" format
     func getRunTime() -> String {
         if runtime != nil {
-            
             return "\(String(runtime! / 60))h\(String(runtime! % 60))min"
         } else {
             return "Can't get runTime!"
