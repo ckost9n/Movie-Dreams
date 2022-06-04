@@ -11,16 +11,16 @@ import UIKit
 class MovieCardController: UIViewController {
     
     //MARK: - Public Properties
-
-    var movieId: Int?
+    
+    var currentMovie: MovieCard?
     let webViewController = WebViewController()
     var movieName: String?
     
     private var fakeActor: [Actor] = []
     private var newActor: [CastList] = []
     
-//    guard model.posterUrl != nil else { return }
-//    movieImgaView.downloaded(from: model.posterUrl!)
+    //    guard model.posterUrl != nil else { return }
+    //    movieImgaView.downloaded(from: model.posterUrl!)
     
     //MARK: - Interface Elements
     private let posterView: UIImageView = {
@@ -44,6 +44,8 @@ class MovieCardController: UIViewController {
     private let movieSubTitle: UILabel = {
         $0.text = "1994 * Thriller, Criminal * 2h 34m"
         $0.font = UIFont.systemFont(ofSize: 16)
+        $0.adjustsFontSizeToFitWidth = true
+        $0.minimumScaleFactor = 0.5
         $0.textColor = .white
         $0.translatesAutoresizingMaskIntoConstraints = false
         return $0
@@ -66,7 +68,8 @@ class MovieCardController: UIViewController {
     private let rewievLabel: UILabel = {
         $0.text = "Двое бандитов Винсент Вега и Джулс Винфилд проводят время в философских беседах в перерыве между разборками и «решением проблем» с должниками своего криминального босса Марселласа Уоллеса. Параллельно разворачивается три истории. В первой из них Винсент присматривает за женой Марселласа Мией и спасает ее от передозировки наркотиков. Во второй рассказывается о Бутче Кулидже, боксере, нанятом Уоллесом, чтобы сдать бой, но обманувшим его."
         $0.font = UIFont.systemFont(ofSize: 16)
-        $0.minimumScaleFactor = 0.5
+        $0.adjustsFontSizeToFitWidth = true
+        $0.minimumScaleFactor = 0.8
         $0.textColor = .white
         $0.numberOfLines = 0
         $0.translatesAutoresizingMaskIntoConstraints = false
@@ -98,7 +101,6 @@ class MovieCardController: UIViewController {
         
         button.tintColor = .white
         button.addTarget(self, action: #selector(addFavoriteButtonTapped), for: .touchUpInside)
-//        button.addTarget(self, action: #selector(addFavoriteButtonTapped), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -115,7 +117,7 @@ class MovieCardController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-
+    
     //MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -161,23 +163,13 @@ class MovieCardController: UIViewController {
         view.addSubview(movieSubTitle)
         view.addSubview(starRatingView)
         view.addSubview(rewievLabel)
-//        view.addSubview(castActorView)
+        //        view.addSubview(castActorView)
         view.addSubview(watchNowButton)
         actorCollectionView.register(
             AtorCollectionViewCell.self,
             forCellWithReuseIdentifier: AtorCollectionViewCell.collectionId
         )
         view.addSubview(actorCollectionView)
-        
-        // отображение информации с currentMovie на UI
-        posterView.image = GeneralProperties.currentMovie.imagePoster
-        movieTitle.text = GeneralProperties.currentMovie.name
-        movieSubTitle.text = GeneralProperties.currentMovie.dateString ?? ""
-        rewievLabel.text = GeneralProperties.currentMovie.description ?? ""
-        if GeneralProperties.currentMovie.posterUrl != nil {
-            posterView.downloaded(from: GeneralProperties.currentMovie.posterUrl!)
-            posterView.contentMode = .scaleAspectFill
-        }
     }
     
     private func setDelegates() {
@@ -185,19 +177,23 @@ class MovieCardController: UIViewController {
         actorCollectionView.dataSource = self
         
     }
-
+    
     //MARK: - Fetch data for selected movie
     func setupData() {
-        guard let unwrappedId = movieId else { return }
+        guard let unwrappedId = currentMovie?.id else { return }
+        guard let unwrappedMediaType = currentMovie?.mediaType else { return }
+        print(unwrappedId)
+        print(unwrappedMediaType)
         // .getMovie fetcher get information aboult movie: poster, title, review, rating, etc...
-        compareModel.getMovie(withId: unwrappedId) { [weak self] movieGet in
+        compareModel.getMovie(ofType: unwrappedMediaType, withId: unwrappedId) { [weak self] movieGet in
             guard let self = self else { return }
             guard let unwrappedMovie = movieGet else { return }
             self.webViewController.webSite = unwrappedMovie.homepage
             self.configureMovieCard(model: unwrappedMovie)
+            print(unwrappedMovie.homepage)
         }
         // .getCast fetcher get information aboult cast: actor's name, character name and URL-path of portrait
-        compareModel.getCast(with: unwrappedId) { [weak self] castGet in
+        compareModel.getCast(ofType: unwrappedMediaType, with: unwrappedId) { [weak self] castGet in
             guard let self = self else { return }
             guard let unwrappedCast = castGet else { return }
             self.newActor = unwrappedCast.cast
@@ -224,20 +220,20 @@ class MovieCardController: UIViewController {
 }
 
 extension MovieCardController: UINavigationBarDelegate {
-
+    
 }
 
 extension MovieCardController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         newActor.count
-//        fakeActor.count
+//      fakeActor.count
     }
-
+    
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AtorCollectionViewCell.collectionId, for: indexPath) as! AtorCollectionViewCell
         let model = newActor[indexPath.row]
-//        let model = fakeActor[indexPath.row]
+//      let model = fakeActor[indexPath.row]
         cell.configure(model: model)
         
         return cell
@@ -298,11 +294,11 @@ extension MovieCardController {
         ])
         //Constraints for actorCollectionView
         NSLayoutConstraint.activate([
-            actorCollectionView.heightAnchor.constraint(equalToConstant: view.frame.height / 10),
-            actorCollectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            actorCollectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            actorCollectionView.heightAnchor.constraint(equalToConstant: view.frame.height / 8),
+            actorCollectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
+            actorCollectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
             actorCollectionView.bottomAnchor.constraint(equalTo: watchNowButton.topAnchor)
-
+            
         ])
         //Constraints for watchNowButton
         NSLayoutConstraint.activate([

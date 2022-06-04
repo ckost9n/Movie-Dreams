@@ -8,7 +8,7 @@
 import UIKit
 import WebKit
 
-class WebViewController: UIViewController, WKNavigationDelegate {
+class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate {
     
     //MARK: - Public Properties
     var webSite: String?
@@ -22,16 +22,14 @@ class WebViewController: UIViewController, WKNavigationDelegate {
     override func loadView() {
         super.loadView()
         
-        webView = WKWebView()
-        webView?.navigationDelegate = self
-        view = webView
+        configureWebView()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupWebView()
-        //setupToolBar()
+        setupToolBar()
     }
     
     //MARK: - Private Methods
@@ -41,20 +39,29 @@ class WebViewController: UIViewController, WKNavigationDelegate {
         present(viewController, animated: true)
     }
     
+    private func configureWebView() {
+        let webConfiguration = WKWebViewConfiguration()
+        webView = WKWebView(frame: .zero, configuration: webConfiguration)
+        webView.uiDelegate = self
+        webView?.navigationDelegate = self
+        view = webView
+    }
+    
     private func setupWebView() {
+        view.backgroundColor = .black
         guard let unwrappedURL = webSite else { return }
         guard let url = URL(string: unwrappedURL) else { return }
         webView?.load(URLRequest(url: url))
         webView?.allowsBackForwardNavigationGestures = true
-//        webView?.addObserver(self,
-//                             forKeyPath: #keyPath(WKWebView.estimatedProgress),
-//                             options: .new, context: nil)
+        webView?.addObserver(self,
+                             forKeyPath: #keyPath(WKWebView.estimatedProgress),
+                             options: .new,
+                             context: nil)
     }
     
     private func setupToolBar() {
         progressView = UIProgressView(progressViewStyle: .default)
         progressView.sizeToFit()
-        
         let progressButton = UIBarButtonItem(customView: progressView)
         let share = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(shareTapped))
         let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
@@ -69,20 +76,19 @@ class WebViewController: UIViewController, WKNavigationDelegate {
                                       action: #selector(webView.goForward))
         
         toolbarItems = [back, spacer, forward, spacer, share, spacer, progressButton, spacer, refresh]
-        
         navigationController?.isToolbarHidden = false
     }
     
-//    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-//            if keyPath == "estimatedProgress" {
-//                progressView.progress = Float(webView.estimatedProgress)
-//            }
-//    }
-//
-//    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-//        title = webView.title
-//    }
-//
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+            if keyPath == "estimatedProgress" {
+                progressView.progress = Float(webView.estimatedProgress)
+            }
+    }
+
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        title = webView.title
+    }
+
 //    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
 //        let url = navigationAction.request.url
 //        if url!.absoluteString.range(of: "about:blank") != nil {
@@ -93,4 +99,3 @@ class WebViewController: UIViewController, WKNavigationDelegate {
 //    }
     
 }
-

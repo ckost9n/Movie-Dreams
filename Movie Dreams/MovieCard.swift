@@ -18,7 +18,7 @@ struct MovieCard {
     let backdropString: String?
     let dateString: String?
     var favoriteMovie: Bool = false
-
+    let mediaType: String?
     let star: Double?
     let description: String?
     let id: Int?
@@ -41,7 +41,7 @@ struct MovieCard {
         return UIImage(named: "poster")!
     }
     
-    init(name: String?, posterString: String, backdropString: String?, dateString: String?, star: Double?, description: String?, id: Int?) {
+    init(name: String?, posterString: String, backdropString: String?, dateString: String?, star: Double?, description: String?, id: Int?, mediaType: String?) {
         self.name = name
         self.posterString = posterString
         self.backdropString = backdropString
@@ -49,6 +49,7 @@ struct MovieCard {
         self.star = star
         self.description = description
         self.id = id
+        self.mediaType = mediaType
     }
     
     init(name: String) {
@@ -59,6 +60,7 @@ struct MovieCard {
         star = nil
         description = nil
         id = nil
+        mediaType = nil
     }
     
 }

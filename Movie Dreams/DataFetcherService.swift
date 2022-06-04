@@ -47,16 +47,19 @@ class DataFetcherService {
         dataFetcher.fetchGnericJSONData(urlString: fullUrl, response: completion)
     }
     //Fetch Data for the chosen movie
-    func fetchMovieData(withId id: Int, completion: @escaping (DetailMovieData?) -> Void) {
-        let fullUrl = "\(movieUrl)/movie/\(id)\(key)"
+    func fetchData(ofType type: String, withId id: Int, completion: @escaping (DetailMovieData?) -> Void) {
+        let fullUrl = "\(movieUrl)/\(type)/\(id)\(key)"
         dataFetcher.fetchGnericJSONData(urlString: fullUrl, response: completion)
     }
-    
-    func fetchCreditsData(withId id: Int, completion: @escaping (DetailCreditsData?) -> Void) {
-        let fullUrl = "\(movieUrl)/movie/\(id)/credits\(key)"
+    //Fetch movie credits data
+    func fetchCreditsData(ofType type: String, withId id: Int, completion: @escaping (DetailCreditsData?) -> Void) {
+        let fullUrl = "\(movieUrl)/\(type)/\(id)/credits\(key)"
         dataFetcher.fetchGnericJSONData(urlString: fullUrl, response: completion)
     }
     
 }
+//
+// https://api.themoviedb.org/3/movie/76479?api_key=3180eef08dadb9ca352d50241ce95409&language=en-US
+// https://api.themoviedb.org/3/tv/76479?api_key=3180eef08dadb9ca352d50241ce95409&language=en-US
 
-
+// https://api.themoviedb.org/3/trending/all/day?api_key=3180eef08dadb9ca352d50241ce95409
