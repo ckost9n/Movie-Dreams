@@ -169,6 +169,15 @@ class MainViewController: UITableViewController {
 
 extension MainViewController: EventsCell {
     func didClick(movie: MovieCard) {
+
+        let movieVC = MovieCardController()
+        movieVC.movieId = movie.id
+        movieVC.modalPresentationStyle = .popover
+        movieVC.modalTransitionStyle = .coverVertical
+
+        navigationController?.present(movieVC, animated: true)
+    }
+
 //        print("-------")
 //        let name = movie.name ?? "No name!!!"
 //        print(name)

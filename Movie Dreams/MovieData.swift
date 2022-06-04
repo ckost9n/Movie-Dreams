@@ -45,7 +45,7 @@ struct Movie: Codable {
         case originCountry = "origin_country"
         case posterPath = "poster_path"
         case voteCount = "vote_count"
-        case id
+        case id = "id"
         case voteAverage = "vote_average"
         case overview
         case firstAirDate = "first_air_date"

@@ -21,59 +21,46 @@ struct MovieCard {
 
     let star: Double?
     let description: String?
-
+    let id: Int?
+    
     var posterUrl: String? {
         guard posterString != nil else { return nil }
         return "https://image.tmdb.org/t/p/w500/" + (self.posterString ?? "")
     }
+    
     var backdorURL: String? {
         guard backdropString != nil else { return nil }
         return "https://image.tmdb.org/t/p/w500/" + (self.backdropString ?? "")
     }
+    
     var imagePoster: UIImage {
-        
         return UIImage(named: "poster")!
     }
     
     var imageBackdor: UIImage {
-        
         return UIImage(named: "poster")!
     }
     
-    init(name: String?, posterString: String, backdropString: String?, dateString: String?, star: Double?, description: String?) {
+    init(name: String?, posterString: String, backdropString: String?, dateString: String?, star: Double?, description: String?, id: Int?) {
         self.name = name
         self.posterString = posterString
         self.backdropString = backdropString
         self.dateString = dateString
         self.star = star
         self.description = description
+        self.id = id
     }
     
     init(name: String) {
         self.name = name
-
         posterString = nil
         backdropString = nil
         dateString = nil
-
         star = nil
         description = nil
-
+        id = nil
     }
     
-    static func getFake() -> [MovieCard] {
-        var movies: [MovieCard] = []
-        movies = [
-            MovieCard(name: "Wonder Women"),
-            MovieCard(name: "Betmen"),
-            MovieCard(name: "Spider-Man"),
-            MovieCard(name: "Men in Black"),
-            MovieCard(name: "Halo"),
-            MovieCard(name: "Star Wars"),
-            MovieCard(name: "Alfa")
-        ]
-        return movies
-    }
 }
 
 struct Actor {
