@@ -12,6 +12,7 @@ enum Categories: String, CaseIterable {
     case trendingAllWeek = "All Trend in week"
     case trendingMovieDay = "Trend Movie in day"
     case trendingMovieWeek = "Trend Movie in week"
+    case continueMovie = "Continue watching movies"
     
 //    case tvPopular = "Popular TV"
 //    case tredingTv = "Trend TV in week"
@@ -39,6 +40,7 @@ class DataFetcherService {
         case .trendingAllWeek: fullUrl = movieUrl + "/trending/all/week" + key
         case .trendingMovieDay: fullUrl = movieUrl + "/trending/movie/day" + key
         case .trendingMovieWeek: fullUrl = movieUrl + "/trending/movie/week" + key
+        case .continueMovie: return
     //        case .tvPopular: fullUrl = movieUrl + "/tv/popular" + key
     //        case .tredingTv: fullUrl = movieUrl + "/trending/tv/week" + key
         }

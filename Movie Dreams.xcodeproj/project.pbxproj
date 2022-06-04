@@ -31,6 +31,7 @@
 		3CD95E232840A75300614E7D /* MovieCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CD95E222840A75300614E7D /* MovieCard.swift */; };
 		86EEBE6828478B2A009CD057 /* StarRatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86EEBE6728478B2A009CD057 /* StarRatingView.swift */; };
 		86EEBE6A2847A012009CD057 /* CastActorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86EEBE692847A012009CD057 /* CastActorView.swift */; };
+		AA28F561284B0D0900D808B2 /* GeneralProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA28F560284B0D0900D808B2 /* GeneralProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -60,6 +61,7 @@
 		3CD95E222840A75300614E7D /* MovieCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCard.swift; sourceTree = "<group>"; };
 		86EEBE6728478B2A009CD057 /* StarRatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarRatingView.swift; sourceTree = "<group>"; };
 		86EEBE692847A012009CD057 /* CastActorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastActorView.swift; sourceTree = "<group>"; };
+		AA28F560284B0D0900D808B2 /* GeneralProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralProperties.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,6 +131,7 @@
 				3CD95E222840A75300614E7D /* MovieCard.swift */,
 				3C4EA9462840E463001E2624 /* MovieData.swift */,
 				3C591032284362EA00B2931B /* TVData.swift */,
+				AA28F560284B0D0900D808B2 /* GeneralProperties.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -269,6 +272,7 @@
 				3C72946C283D3ED300CF584F /* UINavigationBar + Extension.swift in Sources */,
 				3C729472283E42DB00CF584F /* UIColor + Extension.swift in Sources */,
 				3C7657A52843ED020041D53E /* MainTabBarController.swift in Sources */,
+				AA28F561284B0D0900D808B2 /* GeneralProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
