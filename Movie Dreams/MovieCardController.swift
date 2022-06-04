@@ -12,7 +12,6 @@ class MovieCardController: UIViewController {
     
     //MARK: - Public Properties
     var movieName: String?
-    //var currentMovie = MovieCard(name: "")
     
     private var fakeActor: [Actor] = []
     
@@ -157,6 +156,16 @@ class MovieCardController: UIViewController {
             forCellWithReuseIdentifier: AtorCollectionViewCell.collectionId
         )
         view.addSubview(actorCollectionView)
+        
+        // отображение информации с currentMovie на UI
+        posterView.image = GeneralProperties.currentMovie.imagePoster
+        movieTitle.text = GeneralProperties.currentMovie.name
+        movieSubTitle.text = GeneralProperties.currentMovie.dateString ?? ""
+        rewievLabel.text = GeneralProperties.currentMovie.description ?? ""
+        if GeneralProperties.currentMovie.posterUrl != nil {
+            posterView.downloaded(from: GeneralProperties.currentMovie.posterUrl!)
+            posterView.contentMode = .scaleAspectFill
+        }
     }
     
     private func setDelegates() {

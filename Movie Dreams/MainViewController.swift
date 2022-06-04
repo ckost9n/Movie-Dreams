@@ -45,16 +45,15 @@ class MainViewController: UITableViewController {
         for category in allCAtegories {
             compareModel.getMovieLists(category: category) { [weak self] categoryGet in
                 guard let self = self else { return }
-
-       
                 guard let categoryGet = categoryGet else { return }
+                
                 self.categories.append(categoryGet)
                 self.tableView.reloadData()
             }
         }
     }
     
-    //MARK: - Privat Properties
+    //MARK: - Private Properties
     
     private func setupViews() {
         tableView.register(VideoListCell.self, forCellReuseIdentifier: VideoListCell.identifier)
@@ -169,9 +168,6 @@ class MainViewController: UITableViewController {
 
 extension MainViewController: EventsCell {
     func didClick(movie: MovieCard) {
-//        print("-------")
-//        let name = movie.name ?? "No name!!!"
-//        print(name)
         
         // устанавливаю текущий фильм, что бы его мог использовать MovieCardController
         GeneralProperties.currentMovie = movie
