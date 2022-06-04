@@ -12,6 +12,7 @@ class MovieCardController: UIViewController {
     
     //MARK: - Public Properties
     var movieId: Int?
+    let webViewController = WebViewController()
     
     //MARK: - Interface Elements
     private let posterView: UIImageView = {
@@ -111,7 +112,9 @@ class MovieCardController: UIViewController {
     }
     
     @objc private func watchNowButtonTapped(_ sender: UIButton) {
-        
+        webViewController.modalPresentationStyle = .fullScreen
+        webViewController.modalTransitionStyle = .crossDissolve
+        present(webViewController, animated: true)
     }
     
     //MARK: - setupViews()
@@ -135,6 +138,7 @@ class MovieCardController: UIViewController {
         compareModel.getMovie(withId: unwrappedId) { [weak self] movieGet in
             guard let self = self else { return }
             guard let unwrappedMovie = movieGet else { return }
+            self.webViewController.webSite = unwrappedMovie.homepage
             self.configureMovieCard(model: unwrappedMovie)
         }
         // .getCast fetcher get information aboult cast: actor's name, character name and URL-path of portrait
@@ -142,8 +146,8 @@ class MovieCardController: UIViewController {
             guard let self = self else { return }
             guard let unwrappedCast = castGet else { return }
             for actor in unwrappedCast.cast {
-                print(actor.name)
-                print(actor.character)
+                print(actor.name!)
+                print(actor.character!)
                 print(actor.profilePath)
                 print("-------------------")
             }
@@ -166,6 +170,9 @@ class MovieCardController: UIViewController {
         self.rewievLabel.text = model.overview
     }
     
+}
+
+extension MovieCardController: UINavigationBarDelegate {
     
 }
 
