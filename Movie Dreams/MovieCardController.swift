@@ -18,6 +18,7 @@ class MovieCardController: UIViewController {
     //var currentMovie = MovieCard(name: "")
     
     private var fakeActor: [Actor] = []
+    private var newActor: [CastList] = []
     
 //    guard model.posterUrl != nil else { return }
 //    movieImgaView.downloaded(from: model.posterUrl!)
@@ -124,7 +125,7 @@ class MovieCardController: UIViewController {
         setupConstrains()
         setupData()
         
-        setConstrains()
+//        setConstrains()
         fakeActor = Actor.getActor()
         
     }
@@ -190,12 +191,8 @@ class MovieCardController: UIViewController {
         compareModel.getCast(with: unwrappedId) { [weak self] castGet in
             guard let self = self else { return }
             guard let unwrappedCast = castGet else { return }
-            for actor in unwrappedCast.cast {
-                print(actor.name!)
-                print(actor.character!)
-                print(actor.profilePath)
-                print("-------------------")
-            }
+            self.newActor = unwrappedCast.cast
+            self.actorCollectionView.reloadData()
         }
         
     }
@@ -223,22 +220,20 @@ extension MovieCardController: UINavigationBarDelegate {
 
 extension MovieCardController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        return 20
-        fakeActor.count
+        newActor.count
+//        fakeActor.count
     }
 
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AtorCollectionViewCell.collectionId, for: indexPath) as! AtorCollectionViewCell
-//        let model = fakeActor[0]
-        let model = fakeActor[indexPath.row]
+        let model = newActor[indexPath.row]
+//        let model = fakeActor[indexPath.row]
         cell.configure(model: model)
         
         return cell
     }
     
-    
-
 }
 
 //MARK: - NSLayoutConstraint
@@ -290,24 +285,11 @@ extension MovieCardController {
             rewievLabel.topAnchor.constraint(equalTo: starRatingView.bottomAnchor, constant: 5),
             rewievLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 5),
             rewievLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -5),
-            rewievLabel.bottomAnchor.constraint(equalTo: castActorView.topAnchor, constant: 5)
+            rewievLabel.bottomAnchor.constraint(equalTo: actorCollectionView.topAnchor, constant: 5)
         ])
-        //Constraints for castActorView
-//        NSLayoutConstraint.activate([
-//            castActorView.topAnchor.constraint(equalTo: rewievLabel.bottomAnchor),
-//            castActorView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-//            castActorView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-//            castActorView.bottomAnchor.constraint(equalTo: watchNowButton.topAnchor)
-//        ])
-        
+        //Constraints for actorCollectionView
         NSLayoutConstraint.activate([
-
-            castActorView.heightAnchor.constraint(equalToConstant: view.frame.height / 10),
-            castActorView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            castActorView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            castActorView.bottomAnchor.constraint(equalTo: watchNowButton.topAnchor)
-
-            actorCollectionView.topAnchor.constraint(equalTo: rewievLabel.bottomAnchor),
+            actorCollectionView.heightAnchor.constraint(equalToConstant: view.frame.height / 10),
             actorCollectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             actorCollectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             actorCollectionView.bottomAnchor.constraint(equalTo: watchNowButton.topAnchor)

@@ -56,12 +56,12 @@ class AtorCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(model: Actor) {
+    func configure(model: CastList) {
         nameLabel.text = model.name
-        chareckterLabel.text = model.chareckter
+        chareckterLabel.text = model.character
         
-//        guard model.imageString != nil else { return }
-        actorImgaView.downloaded(from: model.imageString)
+        guard let imageURL = model.profileURL else { return }
+        actorImgaView.downloaded(from: imageURL)
         
     }
     
