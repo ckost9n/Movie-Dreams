@@ -11,8 +11,16 @@ import UIKit
 class MovieCardController: UIViewController {
     
     //MARK: - Public Properties
+
     var movieId: Int?
     let webViewController = WebViewController()
+    var movieName: String?
+    //var currentMovie = MovieCard(name: "")
+    
+    private var fakeActor: [Actor] = []
+    
+//    guard model.posterUrl != nil else { return }
+//    movieImgaView.downloaded(from: model.posterUrl!)
     
     //MARK: - Interface Elements
     private let posterView: UIImageView = {
@@ -45,6 +53,16 @@ class MovieCardController: UIViewController {
     private lazy var castActorView = CastActorView()
     private lazy var compareModel = CompareModel()
     
+    private let actorCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .darkBackgound
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        return collectionView
+    }()
+    
     private let rewievLabel: UILabel = {
         $0.text = "Двое бандитов Винсент Вега и Джулс Винфилд проводят время в философских беседах в перерыве между разборками и «решением проблем» с должниками своего криминального босса Марселласа Уоллеса. Параллельно разворачивается три истории. В первой из них Винсент присматривает за женой Марселласа Мией и спасает ее от передозировки наркотиков. Во второй рассказывается о Бутче Кулидже, боксере, нанятом Уоллесом, чтобы сдать бой, но обманувшим его."
         $0.font = UIFont.systemFont(ofSize: 16)
@@ -70,11 +88,17 @@ class MovieCardController: UIViewController {
     
     private lazy var addFavoriteButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setImage(UIImage(systemName: "bookmark"), for: .normal)
+        
+        //устанавливаем иконку bookmark в зависимости от статуса favoriteMovie у фильма
+        if GeneralProperties.currentMovie.favoriteMovie == false {
+            button.setImage(UIImage(systemName: "bookmark"), for: .normal)
+        } else {
+            button.setImage(UIImage(systemName: "bookmark.fill"), for: .normal)
+        }
+        
         button.tintColor = .white
-        button.addTarget(self,
-                         action: #selector(addFavoriteButtonTapped),
-                         for: .touchUpInside)
+        button.addTarget(self, action: #selector(addFavoriteButtonTapped), for: .touchUpInside)
+//        button.addTarget(self, action: #selector(addFavoriteButtonTapped), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -95,10 +119,13 @@ class MovieCardController: UIViewController {
     //MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        setDelegates()
         setupViews()
         setupConstrains()
         setupData()
         
+        setConstrains()
+        fakeActor = Actor.getActor()
         
     }
     
@@ -108,7 +135,14 @@ class MovieCardController: UIViewController {
     }
     
     @objc private func addFavoriteButtonTapped(_ sender: UIButton) {
-        
+        //меняем иконку bookmark и меняем статус favoriteMovie у фильма
+        if addFavoriteButton.currentImage == UIImage(systemName: "bookmark.fill") {
+            addFavoriteButton.setImage(UIImage(systemName: "bookmark"), for: .normal)
+            GeneralProperties.currentMovie.favoriteMovie = false
+        } else {
+            addFavoriteButton.setImage(UIImage(systemName: "bookmark.fill"), for: .normal)
+            GeneralProperties.currentMovie.favoriteMovie = true
+        }
     }
     
     @objc private func watchNowButtonTapped(_ sender: UIButton) {
@@ -127,10 +161,21 @@ class MovieCardController: UIViewController {
         view.addSubview(movieSubTitle)
         view.addSubview(starRatingView)
         view.addSubview(rewievLabel)
-        view.addSubview(castActorView)
+//        view.addSubview(castActorView)
         view.addSubview(watchNowButton)
+        actorCollectionView.register(
+            AtorCollectionViewCell.self,
+            forCellWithReuseIdentifier: AtorCollectionViewCell.collectionId
+        )
+        view.addSubview(actorCollectionView)
     }
     
+    private func setDelegates() {
+        actorCollectionView.delegate = self
+        actorCollectionView.dataSource = self
+        
+    }
+
     //MARK: - Fetch data for selected movie
     func setupData() {
         guard let unwrappedId = movieId else { return }
@@ -173,7 +218,27 @@ class MovieCardController: UIViewController {
 }
 
 extension MovieCardController: UINavigationBarDelegate {
+
+}
+
+extension MovieCardController: UICollectionViewDelegate, UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+//        return 20
+        fakeActor.count
+    }
+
     
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AtorCollectionViewCell.collectionId, for: indexPath) as! AtorCollectionViewCell
+//        let model = fakeActor[0]
+        let model = fakeActor[indexPath.row]
+        cell.configure(model: model)
+        
+        return cell
+    }
+    
+    
+
 }
 
 //MARK: - NSLayoutConstraint
@@ -228,11 +293,25 @@ extension MovieCardController {
             rewievLabel.bottomAnchor.constraint(equalTo: castActorView.topAnchor, constant: 5)
         ])
         //Constraints for castActorView
+//        NSLayoutConstraint.activate([
+//            castActorView.topAnchor.constraint(equalTo: rewievLabel.bottomAnchor),
+//            castActorView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+//            castActorView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+//            castActorView.bottomAnchor.constraint(equalTo: watchNowButton.topAnchor)
+//        ])
+        
         NSLayoutConstraint.activate([
+
             castActorView.heightAnchor.constraint(equalToConstant: view.frame.height / 10),
             castActorView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             castActorView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             castActorView.bottomAnchor.constraint(equalTo: watchNowButton.topAnchor)
+
+            actorCollectionView.topAnchor.constraint(equalTo: rewievLabel.bottomAnchor),
+            actorCollectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            actorCollectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            actorCollectionView.bottomAnchor.constraint(equalTo: watchNowButton.topAnchor)
+
         ])
         //Constraints for watchNowButton
         NSLayoutConstraint.activate([
@@ -243,3 +322,4 @@ extension MovieCardController {
         ])
     }
 }
+

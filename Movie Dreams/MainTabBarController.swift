@@ -17,13 +17,16 @@ class MainTabBarController: UITabBarController {
     
     private func setupTabBar() {
         
-        let mainVC = createNavController(vc: MainViewController(), itemName: "Home", itemImage: "house.fill")
+        let mainVC = createNavController(vc: MainViewController(), itemName: "Home", itemImage: "house")
         let movieCardVC = createNavController(vc: MovieCardController(), itemName: "Movie", itemImage: "play.circle")
+        let bookmarkVC = createNavController(vc: MovieCardController(), itemName: "Bookmark", itemImage: "bookmark")
+        let profileVC = createNavController(vc: MovieCardController(), itemName: "Profile", itemImage: "person")
         
-        viewControllers = [mainVC, movieCardVC]
-        tabBar.barTintColor = .darkBackgound
-        tabBar.tintColor = .red
-//        tabBar.
+        viewControllers = [mainVC, movieCardVC, bookmarkVC, profileVC]
+
+        tabBar.backgroundImage = UIImage()
+        tabBar.tintColor = .white
+        tabBar.unselectedItemTintColor = .white
         
         let layer = CAShapeLayer()
         layer.path = UIBezierPath(
@@ -33,11 +36,9 @@ class MainTabBarController: UITabBarController {
                 width: tabBar.bounds.width - 40,
                 height: tabBar.bounds.height + 10
             ), cornerRadius: (tabBar.frame.width / 2)).cgPath
-        
+        layer.fillColor = UIColor.red.cgColor
         
         tabBar.layer.insertSublayer(layer, at: 0)
- 
-        
     }
     
     private func createNavController(vc: UIViewController, itemName: String, itemImage: String) -> UINavigationController {

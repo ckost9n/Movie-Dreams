@@ -9,7 +9,7 @@ import UIKit
 
 struct CategoryMovie {
     let name: Categories
-    let movies: [MovieCard]
+    var movies: [MovieCard]
 }
 
 struct MovieCard {
@@ -17,6 +17,8 @@ struct MovieCard {
     let posterString: String?
     let backdropString: String?
     let dateString: String?
+    var favoriteMovie: Bool = false
+
     let star: Double?
     let description: String?
     let id: Int?
@@ -64,10 +66,20 @@ struct MovieCard {
 struct Actor {
     let name: String
     let chareckter: String
-    let imageData: Data?
+    let imageString = "https://api.themoviedb.org/3/movie/{movie_id}/credits?api_key=<<api_key>>&language=en-US"
     
     var image: UIImage {
-        let image = imageData != nil ? UIImage(data: imageData!)! : UIImage(named: "poster")!
-        return image
+        return UIImage(named: "poster")!
+    }
+    
+    static func getActor() -> [Actor] {
+        let actories = [
+            Actor(name: "Liza", chareckter: "Woomen"),
+            Actor(name: "Sveta", chareckter: "Girl"),
+            Actor(name: "Konstantin", chareckter: "Dark"),
+            Actor(name: "Artem", chareckter: "Graf")
+        ]
+        return actories
     }
 }
+
