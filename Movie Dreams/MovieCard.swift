@@ -9,7 +9,7 @@ import UIKit
 
 struct CategoryMovie {
     let name: Categories
-    let movies: [MovieCard]
+    var movies: [MovieCard]
 }
 
 struct MovieCard {
@@ -17,6 +17,7 @@ struct MovieCard {
     let posterString: String?
     let backdropString: String?
     let dateString: String?
+    var favoriteMovie: Bool = false
 
     let star: Double?
     let description: String?
@@ -94,3 +95,4 @@ struct Actor {
         return actories
     }
 }
+
