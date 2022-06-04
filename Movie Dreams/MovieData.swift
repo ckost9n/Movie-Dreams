@@ -8,15 +8,15 @@
 import UIKit
 
 struct MovieList: Codable {
-    let page: Int
+//    let page: Int
     let results: [Movie]
-    let totalPages, totalResults: Int
+//    let totalPages, totalResults: Int
 
-    enum CodingKeys: String, CodingKey {
-        case page, results
-        case totalPages = "total_pages"
-        case totalResults = "total_results"
-    }
+//    enum CodingKeys: String, CodingKey {
+//        case page, results
+//        case totalPages = "total_pages"
+//        case totalResults = "total_results"
+//    }
 }
 
 // MARK: - Result
@@ -30,7 +30,7 @@ struct Movie: Codable {
     let voteAverage: Double
     let overview: String
     let firstAirDate: String?
-    let originalLanguage: OriginalLanguage
+//    let originalLanguage: OriginalLanguage
     let name: String?
     let popularity: Double
     let mediaType: MediaType
@@ -49,7 +49,7 @@ struct Movie: Codable {
         case voteAverage = "vote_average"
         case overview
         case firstAirDate = "first_air_date"
-        case originalLanguage = "original_language"
+//        case originalLanguage = "original_language"
         case name, popularity
         case mediaType = "media_type"
         case adult
@@ -66,4 +66,5 @@ enum MediaType: String, Codable {
 
 enum OriginalLanguage: String, Codable {
     case en = "en"
+//    case tr = "tr"
 }
