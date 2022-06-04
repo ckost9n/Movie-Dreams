@@ -15,8 +15,8 @@ class AtorCollectionViewCell: UICollectionViewCell {
     
     private let actorImgaView: UIImageView = {
        let imageView = UIImageView()
-        imageView.image = UIImage(named: "poster")
-//        imageView.contentMode = .scaleToFill
+        imageView.image = UIImage(systemName: "person.crop.circle")
+        imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
