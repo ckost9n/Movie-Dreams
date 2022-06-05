@@ -29,10 +29,3 @@ struct Cast: Codable {
 }
 
 
-
-
-//      "name": "Eddie Redmayne",
-//      "original_name": "Eddie Redmayne",
-//      "profile_path": "/fSvG7qzoBBnJUmgtIuMgrK3EQPN.jpg",
-//      "character": "Newt Scamander",
-

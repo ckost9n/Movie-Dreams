@@ -133,7 +133,7 @@ class MovieCardController: UIViewController {
         setupData()
     }
     
-    //MARK: - Private Properties
+    //MARK: - Private Methods
     @objc private func closeButtonTapped(_ sender: UIButton) {
         self.dismiss(animated: true)
     }
@@ -222,16 +222,10 @@ class MovieCardController: UIViewController {
     
 }
 
-extension MovieCardController: UINavigationBarDelegate {
-    
-}
-
 extension MovieCardController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         newActor.count
-//      fakeActor.count
     }
-    
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ActorCollectionViewCell.collectionId, for: indexPath) as! ActorCollectionViewCell

@@ -17,13 +17,11 @@
 		3C31D22028477B89001DD3AE /* CompareModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C31D21F28477B89001DD3AE /* CompareModel.swift */; };
 		3C4EA9472840E463001E2624 /* MovieData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C4EA9462840E463001E2624 /* MovieData.swift */; };
 		3C5910312841F61B00B2931B /* UIImage + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C5910302841F61B00B2931B /* UIImage + Extension.swift */; };
-		3C591033284362EA00B2931B /* TVData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C591032284362EA00B2931B /* TVData.swift */; };
 		3C729465283D235700CF584F /* VideoListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C729464283D235700CF584F /* VideoListCell.swift */; };
 		3C72946C283D3ED300CF584F /* UINavigationBar + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C72946B283D3ED300CF584F /* UINavigationBar + Extension.swift */; };
 		3C72946E283E2AC100CF584F /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C72946D283E2AC100CF584F /* CollectionViewCell.swift */; };
 		3C729470283E3B2100CF584F /* Date + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C72946F283E3B2100CF584F /* Date + Extension.swift */; };
 		3C729472283E42DB00CF584F /* UIColor + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C729471283E42DB00CF584F /* UIColor + Extension.swift */; };
-		3C729474283E70C200CF584F /* UICollectionView + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C729473283E70C100CF584F /* UICollectionView + Extension.swift */; };
 		3C7657A52843ED020041D53E /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7657A42843ED020041D53E /* MainTabBarController.swift */; };
 		3C7657D728472C540041D53E /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7657D428472C530041D53E /* NetworkService.swift */; };
 		3C7657D828472C540041D53E /* NetworkDataFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7657D528472C540041D53E /* NetworkDataFetcher.swift */; };
@@ -51,13 +49,11 @@
 		3C31D21F28477B89001DD3AE /* CompareModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompareModel.swift; sourceTree = "<group>"; };
 		3C4EA9462840E463001E2624 /* MovieData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieData.swift; sourceTree = "<group>"; };
 		3C5910302841F61B00B2931B /* UIImage + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage + Extension.swift"; sourceTree = "<group>"; };
-		3C591032284362EA00B2931B /* TVData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVData.swift; sourceTree = "<group>"; };
 		3C729464283D235700CF584F /* VideoListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoListCell.swift; sourceTree = "<group>"; };
 		3C72946B283D3ED300CF584F /* UINavigationBar + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationBar + Extension.swift"; sourceTree = "<group>"; };
 		3C72946D283E2AC100CF584F /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 		3C72946F283E3B2100CF584F /* Date + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date + Extension.swift"; sourceTree = "<group>"; };
 		3C729471283E42DB00CF584F /* UIColor + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor + Extension.swift"; sourceTree = "<group>"; };
-		3C729473283E70C100CF584F /* UICollectionView + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView + Extension.swift"; sourceTree = "<group>"; };
 		3C7657A42843ED020041D53E /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		3C7657D428472C530041D53E /* NetworkService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		3C7657D528472C540041D53E /* NetworkDataFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkDataFetcher.swift; sourceTree = "<group>"; };
@@ -137,13 +133,9 @@
 		3C0028BD283CF8CF00155250 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				3CD95E222840A75300614E7D /* MovieCard.swift */,
-				3C4EA9462840E463001E2624 /* MovieData.swift */,
-				3C591032284362EA00B2931B /* TVData.swift */,
-				86733B3F284A783E00547D27 /* DetailMovieData.swift */,
-				86733B41284A7F3800547D27 /* DetailMovieCard.swift */,
-				86733B43284AA0D900547D27 /* DetailCreditsData.swift */,
-				86733B45284ABD4700547D27 /* DetailCreditsCard.swift */,
+				3CCD61B2284CA814007AF781 /* All movies */,
+				3CCD61B3284CA85C007AF781 /* Movie */,
+				3CCD61B4284CA880007AF781 /* Actor */,
 				AA28F560284B0D0900D808B2 /* GeneralProperties.swift */,
 			);
 			name = Models;
@@ -152,10 +144,8 @@
 		3C0028BE283CF8D700155250 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				1A525A7E283D39E400950AD9 /* StarView.swift */,
-				3C729464283D235700CF584F /* VideoListCell.swift */,
-				3C72946D283E2AC100CF584F /* CollectionViewCell.swift */,
-				3C8E15E7284A4609005D023F /* ActorCollectionViewCell.swift */,
+				3CCD61B1284CA7CD007AF781 /* MainViewController */,
+				3CCD61B0284CA7B1007AF781 /* MovieCardController */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -184,12 +174,56 @@
 			isa = PBXGroup;
 			children = (
 				3C72946B283D3ED300CF584F /* UINavigationBar + Extension.swift */,
-				3C729473283E70C100CF584F /* UICollectionView + Extension.swift */,
 				3C72946F283E3B2100CF584F /* Date + Extension.swift */,
 				3C729471283E42DB00CF584F /* UIColor + Extension.swift */,
 				3C5910302841F61B00B2931B /* UIImage + Extension.swift */,
 			);
 			name = Extension;
+			sourceTree = "<group>";
+		};
+		3CCD61B0284CA7B1007AF781 /* MovieCardController */ = {
+			isa = PBXGroup;
+			children = (
+				1A525A7E283D39E400950AD9 /* StarView.swift */,
+				3C8E15E7284A4609005D023F /* ActorCollectionViewCell.swift */,
+			);
+			name = MovieCardController;
+			sourceTree = "<group>";
+		};
+		3CCD61B1284CA7CD007AF781 /* MainViewController */ = {
+			isa = PBXGroup;
+			children = (
+				3C729464283D235700CF584F /* VideoListCell.swift */,
+				3C72946D283E2AC100CF584F /* CollectionViewCell.swift */,
+			);
+			name = MainViewController;
+			sourceTree = "<group>";
+		};
+		3CCD61B2284CA814007AF781 /* All movies */ = {
+			isa = PBXGroup;
+			children = (
+				3CD95E222840A75300614E7D /* MovieCard.swift */,
+				3C4EA9462840E463001E2624 /* MovieData.swift */,
+			);
+			name = "All movies";
+			sourceTree = "<group>";
+		};
+		3CCD61B3284CA85C007AF781 /* Movie */ = {
+			isa = PBXGroup;
+			children = (
+				86733B3F284A783E00547D27 /* DetailMovieData.swift */,
+				86733B41284A7F3800547D27 /* DetailMovieCard.swift */,
+			);
+			name = Movie;
+			sourceTree = "<group>";
+		};
+		3CCD61B4284CA880007AF781 /* Actor */ = {
+			isa = PBXGroup;
+			children = (
+				86733B43284AA0D900547D27 /* DetailCreditsData.swift */,
+				86733B45284ABD4700547D27 /* DetailCreditsCard.swift */,
+			);
+			name = Actor;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -277,12 +311,10 @@
 				3C5910312841F61B00B2931B /* UIImage + Extension.swift in Sources */,
 				3C729465283D235700CF584F /* VideoListCell.swift in Sources */,
 				3CD95E232840A75300614E7D /* MovieCard.swift in Sources */,
-				3C591033284362EA00B2931B /* TVData.swift in Sources */,
 				3C4EA9472840E463001E2624 /* MovieData.swift in Sources */,
 				86733B48284ACCB200547D27 /* WebViewController.swift in Sources */,
 				3C7657D928472C540041D53E /* DataFetcherService.swift in Sources */,
 				86733B44284AA0D900547D27 /* DetailCreditsData.swift in Sources */,
-				3C729474283E70C200CF584F /* UICollectionView + Extension.swift in Sources */,
 				3C8E15E8284A4609005D023F /* ActorCollectionViewCell.swift in Sources */,
 				3C72946C283D3ED300CF584F /* UINavigationBar + Extension.swift in Sources */,
 				3C729472283E42DB00CF584F /* UIColor + Extension.swift in Sources */,

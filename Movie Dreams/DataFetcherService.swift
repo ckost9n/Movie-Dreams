@@ -13,11 +13,6 @@ enum Categories: String, CaseIterable {
     case trendingMovieDay = "Trend Movie in day"
     case trendingMovieWeek = "Trend Movie in week"
     case continueMovie = "Continue watching movies"
-    
-//    case tvPopular = "Popular TV"
-//    case tredingTv = "Trend TV in week"
-    
-//    static let allValues = [trendingAll, tvPopular, trendingMovie, tredingTv]
 }
 
 class DataFetcherService {
@@ -41,8 +36,6 @@ class DataFetcherService {
         case .trendingMovieDay: fullUrl = movieUrl + "/trending/movie/day" + key
         case .trendingMovieWeek: fullUrl = movieUrl + "/trending/movie/week" + key
         case .continueMovie: return
-    //        case .tvPopular: fullUrl = movieUrl + "/tv/popular" + key
-    //        case .tredingTv: fullUrl = movieUrl + "/trending/tv/week" + key
         }
         dataFetcher.fetchGnericJSONData(urlString: fullUrl, response: completion)
     }
