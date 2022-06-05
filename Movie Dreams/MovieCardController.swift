@@ -64,6 +64,8 @@ class MovieCardController: UIViewController {
     private let actorCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
+        layout.itemSize = CGSize(width: 70, height: 90)
+        layout.minimumLineSpacing = 10
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .darkBackgound
         collectionView.showsHorizontalScrollIndicator = false

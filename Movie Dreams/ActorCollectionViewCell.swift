@@ -16,7 +16,8 @@ class ActorCollectionViewCell: UICollectionViewCell {
     private let actorImgaView: UIImageView = {
        let imageView = UIImageView()
         imageView.image = UIImage(systemName: "person.crop.circle")
-        imageView.contentMode = .scaleAspectFit
+        imageView.tintColor = .gray
+        imageView.contentMode = .scaleToFill
         imageView.clipsToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
@@ -62,7 +63,9 @@ class ActorCollectionViewCell: UICollectionViewCell {
         
         guard let imageURL = model.profileURL else { return }
         actorImgaView.downloaded(from: imageURL)
-        
+        actorImgaView.contentMode = .scaleAspectFill
+        actorImgaView.clipsToBounds = true
+        actorImgaView.layer.cornerRadius = 35
     }
     
     private func setupViews() {
@@ -71,7 +74,6 @@ class ActorCollectionViewCell: UICollectionViewCell {
         addSubview(nameLabel)
         addSubview(chareckterLabel)
         clipsToBounds = true
-        actorImgaView.layer.cornerRadius = 15
     }
 }
 
@@ -82,19 +84,21 @@ extension ActorCollectionViewCell {
         NSLayoutConstraint.activate([
             actorImgaView.topAnchor.constraint(equalTo: topAnchor, constant: 0),
             actorImgaView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0),
-            actorImgaView.widthAnchor.constraint(equalToConstant: 30),
-            actorImgaView.heightAnchor.constraint(equalToConstant: 30),
+            actorImgaView.widthAnchor.constraint(equalToConstant: 70),
+            actorImgaView.heightAnchor.constraint(equalToConstant: 70),
             actorImgaView.bottomAnchor.constraint(equalTo: nameLabel.topAnchor, constant: 0)
         ])
         
         NSLayoutConstraint.activate([
             nameLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0),
-            nameLabel.bottomAnchor.constraint(equalTo: chareckterLabel.topAnchor, constant: 0)
+            nameLabel.bottomAnchor.constraint(equalTo: chareckterLabel.topAnchor, constant: 0),
+            nameLabel.widthAnchor.constraint(equalToConstant: 70)
         ])
         
         NSLayoutConstraint.activate([
             chareckterLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0),
-            chareckterLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0)
+            chareckterLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0),
+            chareckterLabel.widthAnchor.constraint(equalToConstant: 70),
         ])
         
     }
