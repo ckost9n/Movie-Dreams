@@ -11,16 +11,17 @@ import UIKit
 class MovieCardController: UIViewController {
     
     //MARK: - Public Properties
-
-    var movieId: Int?
+    
+    var currentMovie: MovieCard?
     let webViewController = WebViewController()
     var movieName: String?
     
     private var fakeActor: [Actor] = []
     private var newActor: [CastList] = []
     
-//    guard model.posterUrl != nil else { return }
-//    movieImgaView.downloaded(from: model.posterUrl!)
+    //MARK: - Private Properties
+    private lazy var compareModel = CompareModel()
+    private lazy var starsView = StarsView()
     
     //MARK: - Interface Elements
     private let posterView: UIImageView = {
@@ -32,6 +33,7 @@ class MovieCardController: UIViewController {
     
     private let movieTitle: UILabel = {
         $0.text = "Pulp Fiction"
+        $0.shadowColor = .black
         $0.numberOfLines = 2
         $0.font = UIFont.boldSystemFont(ofSize: 30)
         $0.minimumScaleFactor = 0.5
@@ -44,18 +46,26 @@ class MovieCardController: UIViewController {
     private let movieSubTitle: UILabel = {
         $0.text = "1994 * Thriller, Criminal * 2h 34m"
         $0.font = UIFont.systemFont(ofSize: 16)
+        $0.adjustsFontSizeToFitWidth = true
+        $0.minimumScaleFactor = 0.5
         $0.textColor = .white
         $0.translatesAutoresizingMaskIntoConstraints = false
         return $0
     }(UILabel())
     
-    private lazy var starRatingView = StarRatingView()
-    private lazy var castActorView = CastActorView()
-    private lazy var compareModel = CompareModel()
+    private let ratingLabel: UILabel = {
+        $0.text = "0.0"
+        $0.font = UIFont.systemFont(ofSize: 20)
+        $0.textColor = .yellow
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        return $0
+    }(UILabel())
     
     private let actorCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
+        layout.itemSize = CGSize(width: 70, height: 90)
+        layout.minimumLineSpacing = 10
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .darkBackgound
         collectionView.showsHorizontalScrollIndicator = false
@@ -66,7 +76,8 @@ class MovieCardController: UIViewController {
     private let rewievLabel: UILabel = {
         $0.text = "Двое бандитов Винсент Вега и Джулс Винфилд проводят время в философских беседах в перерыве между разборками и «решением проблем» с должниками своего криминального босса Марселласа Уоллеса. Параллельно разворачивается три истории. В первой из них Винсент присматривает за женой Марселласа Мией и спасает ее от передозировки наркотиков. Во второй рассказывается о Бутче Кулидже, боксере, нанятом Уоллесом, чтобы сдать бой, но обманувшим его."
         $0.font = UIFont.systemFont(ofSize: 16)
-        $0.minimumScaleFactor = 0.5
+        $0.adjustsFontSizeToFitWidth = true
+        $0.minimumScaleFactor = 0.8
         $0.textColor = .white
         $0.numberOfLines = 0
         $0.translatesAutoresizingMaskIntoConstraints = false
@@ -98,7 +109,6 @@ class MovieCardController: UIViewController {
         
         button.tintColor = .white
         button.addTarget(self, action: #selector(addFavoriteButtonTapped), for: .touchUpInside)
-//        button.addTarget(self, action: #selector(addFavoriteButtonTapped), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -115,7 +125,7 @@ class MovieCardController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-
+    
     //MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -123,10 +133,7 @@ class MovieCardController: UIViewController {
         setupViews()
         setupConstrains()
         setupData()
-        
-//        setConstrains()
         fakeActor = Actor.getActor()
-        
     }
     
     //MARK: - Private Properties
@@ -159,25 +166,15 @@ class MovieCardController: UIViewController {
         view.addSubview(addFavoriteButton)
         view.addSubview(movieTitle)
         view.addSubview(movieSubTitle)
-        view.addSubview(starRatingView)
+        view.addSubview(starsView)
+        view.addSubview(ratingLabel)
         view.addSubview(rewievLabel)
-//        view.addSubview(castActorView)
         view.addSubview(watchNowButton)
         actorCollectionView.register(
-            AtorCollectionViewCell.self,
-            forCellWithReuseIdentifier: AtorCollectionViewCell.collectionId
+            ActorCollectionViewCell.self,
+            forCellWithReuseIdentifier: ActorCollectionViewCell.collectionId
         )
         view.addSubview(actorCollectionView)
-        
-        // отображение информации с currentMovie на UI
-        posterView.image = GeneralProperties.currentMovie.imagePoster
-        movieTitle.text = GeneralProperties.currentMovie.name
-        movieSubTitle.text = GeneralProperties.currentMovie.dateString ?? ""
-        rewievLabel.text = GeneralProperties.currentMovie.description ?? ""
-        if GeneralProperties.currentMovie.posterUrl != nil {
-            posterView.downloaded(from: GeneralProperties.currentMovie.posterUrl!)
-            posterView.contentMode = .scaleAspectFill
-        }
     }
     
     private func setDelegates() {
@@ -185,19 +182,23 @@ class MovieCardController: UIViewController {
         actorCollectionView.dataSource = self
         
     }
-
+    
     //MARK: - Fetch data for selected movie
     func setupData() {
-        guard let unwrappedId = movieId else { return }
+        guard let unwrappedId = currentMovie?.id else { return }
+        guard let unwrappedMediaType = currentMovie?.mediaType else { return }
+        print(unwrappedId)
+        print(unwrappedMediaType)
         // .getMovie fetcher get information aboult movie: poster, title, review, rating, etc...
-        compareModel.getMovie(withId: unwrappedId) { [weak self] movieGet in
+        compareModel.getMovie(ofType: unwrappedMediaType, withId: unwrappedId) { [weak self] movieGet in
             guard let self = self else { return }
             guard let unwrappedMovie = movieGet else { return }
             self.webViewController.webSite = unwrappedMovie.homepage
             self.configureMovieCard(model: unwrappedMovie)
+            print(unwrappedMovie.homepage)
         }
         // .getCast fetcher get information aboult cast: actor's name, character name and URL-path of portrait
-        compareModel.getCast(with: unwrappedId) { [weak self] castGet in
+        compareModel.getCast(ofType: unwrappedMediaType, with: unwrappedId) { [weak self] castGet in
             guard let self = self else { return }
             guard let unwrappedCast = castGet else { return }
             self.newActor = unwrappedCast.cast
@@ -219,25 +220,27 @@ class MovieCardController: UIViewController {
         self.movieSubTitle.text = movieYear + "*" + model.getGenres().dropLast() + "*" + model.getRunTime()
         //Set description to rewievLabel
         self.rewievLabel.text = model.overview
+        self.ratingLabel.text = String(model.rating)
+        self.starsView.rating = Int(model.rating)
     }
     
 }
 
 extension MovieCardController: UINavigationBarDelegate {
-
+    
 }
 
 extension MovieCardController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         newActor.count
-//        fakeActor.count
+//      fakeActor.count
     }
-
+    
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AtorCollectionViewCell.collectionId, for: indexPath) as! AtorCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ActorCollectionViewCell.collectionId, for: indexPath) as! ActorCollectionViewCell
         let model = newActor[indexPath.row]
-//        let model = fakeActor[indexPath.row]
+//      let model = fakeActor[indexPath.row]
         cell.configure(model: model)
         
         return cell
@@ -273,7 +276,7 @@ extension MovieCardController {
         //Constraints for movieTitle
         NSLayoutConstraint.activate([
             movieTitle.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            movieTitle.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            movieTitle.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: view.frame.height / 70),
             movieTitle.widthAnchor.constraint(equalToConstant: view.frame.width * 0.8)
         ])
         //Constraints for movieSubTitle
@@ -283,33 +286,41 @@ extension MovieCardController {
             movieSubTitle.heightAnchor.constraint(equalToConstant: 30)
         ])
         //Constraints for starRatingView
+        starsView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            starRatingView.topAnchor.constraint(equalTo: movieSubTitle.bottomAnchor, constant: 5),
-            starRatingView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            starRatingView.widthAnchor.constraint(equalToConstant: view.frame.width / 2),
-            starRatingView.heightAnchor.constraint(equalToConstant: 30)
+            starsView.topAnchor.constraint(equalTo: movieSubTitle.bottomAnchor, constant: 5),
+            starsView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            starsView.widthAnchor.constraint(equalToConstant: view.frame.width / 2),
+            starsView.heightAnchor.constraint(equalToConstant: 20)
+        ])
+        //Constrains for ratingLabel
+        NSLayoutConstraint.activate([
+            ratingLabel.topAnchor.constraint(equalTo: movieSubTitle.bottomAnchor, constant: 5),
+            ratingLabel.widthAnchor.constraint(equalToConstant: 40),
+            ratingLabel.heightAnchor.constraint(equalToConstant: 20),
+            ratingLabel.trailingAnchor.constraint(equalTo: starsView.leadingAnchor, constant: 5)
         ])
         //Constraints for rewievLabel
         NSLayoutConstraint.activate([
-            rewievLabel.topAnchor.constraint(equalTo: starRatingView.bottomAnchor, constant: 5),
+            rewievLabel.topAnchor.constraint(equalTo: starsView.bottomAnchor, constant: 5),
             rewievLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 5),
             rewievLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -5),
             rewievLabel.bottomAnchor.constraint(equalTo: actorCollectionView.topAnchor, constant: 5)
         ])
         //Constraints for actorCollectionView
         NSLayoutConstraint.activate([
-            actorCollectionView.heightAnchor.constraint(equalToConstant: view.frame.height / 10),
-            actorCollectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            actorCollectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            actorCollectionView.heightAnchor.constraint(equalToConstant: view.frame.height / 8),
+            actorCollectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
+            actorCollectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
             actorCollectionView.bottomAnchor.constraint(equalTo: watchNowButton.topAnchor)
-
+            
         ])
         //Constraints for watchNowButton
         NSLayoutConstraint.activate([
             watchNowButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -5),
             watchNowButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             watchNowButton.widthAnchor.constraint(equalToConstant: view.frame.width / 2),
-            watchNowButton.heightAnchor.constraint(equalToConstant: 40)
+            watchNowButton.heightAnchor.constraint(equalToConstant: view.frame.height / 20)
         ])
     }
 }

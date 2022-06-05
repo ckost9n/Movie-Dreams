@@ -46,7 +46,6 @@ class MainViewController: UITableViewController {
             compareModel.getMovieLists(category: category) { [weak self] categoryGet in
                 guard let self = self else { return }
                 guard let categoryGet = categoryGet else { return }
-                
                 self.categories.append(categoryGet)
                 self.tableView.reloadData()
             }
@@ -184,8 +183,8 @@ extension MainViewController: EventsCell {
         }
 
         let movieVC = MovieCardController()
-        movieVC.movieId = movie.id
-        movieVC.modalPresentationStyle = .fullScreen
+        movieVC.currentMovie = movie
+        movieVC.modalPresentationStyle = .popover
         movieVC.modalTransitionStyle = .coverVertical
 
         navigationController?.present(movieVC, animated: true)

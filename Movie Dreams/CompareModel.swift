@@ -27,7 +27,8 @@ class CompareModel {
                     dateString: movie.releaseDate ?? movie.firstAirDate,
                     star: movie.voteAverage,
                     description: movie.overview,
-                    id: movie.id
+                    id: movie.id,
+                    mediaType: movie.mediaType.rawValue
                 )
                 movies.append(newMovie)
             }
@@ -36,25 +37,27 @@ class CompareModel {
         }
     }
     // Get selected movie by id
-    func getMovie(withId id: Int, completion: @escaping (DetailMovieCard?) -> Void) {
+    func getMovie(ofType type: String, withId id: Int, completion: @escaping (DetailMovieCard?) -> Void) {
         
-        dataFetcherService.fetchMovieData(withId: id) { decodeData in
+        dataFetcherService.fetchData(ofType: type, withId: id) { decodeData in
             guard let movie = decodeData else { return }
-            let newMovie = DetailMovieCard(originalTitle: movie.originalTitle,
+            let newMovie = DetailMovieCard(originalTitle: movie.originalTitle ?? movie.originalName ?? movie.name,
                                            backdropPath: movie.backdropPath,
                                            overview: movie.overview,
-                                           releaseDate: movie.releaseDate,
+                                           releaseDate: movie.releaseDate ?? movie.firstAirDate,
                                            runtime: movie.runtime,
-                                           homepage: movie.homepage,
-                                           genres: movie.genres
+                                           episodeRunTime: movie.episodeRunTime ?? [],
+                                           homepage: movie.homepage ?? "https://www.google.com/",
+                                           genres: movie.genres,
+                                           rating: movie.voteAverage
             )
             completion(newMovie)
         }
     }
     // Get actor cast from selected movie by id
-    func getCast(with id: Int, completion: @escaping (DetailCreditsCard?) -> Void) {
+    func getCast(ofType type: String, with id: Int, completion: @escaping (DetailCreditsCard?) -> Void) {
         
-        dataFetcherService.fetchCreditsData(withId: id) { decodeData in
+        dataFetcherService.fetchCreditsData(ofType: type, withId: id) { decodeData in
             guard let castList = decodeData?.credits else { return }
             var actors: [CastList] = []
             for actor in castList {

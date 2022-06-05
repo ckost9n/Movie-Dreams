@@ -47,16 +47,14 @@ class DataFetcherService {
         dataFetcher.fetchGnericJSONData(urlString: fullUrl, response: completion)
     }
     //Fetch Data for the chosen movie
-    func fetchMovieData(withId id: Int, completion: @escaping (DetailMovieData?) -> Void) {
-        let fullUrl = "\(movieUrl)/movie/\(id)\(key)"
+    func fetchData(ofType type: String, withId id: Int, completion: @escaping (DetailMovieData?) -> Void) {
+        let fullUrl = "\(movieUrl)/\(type)/\(id)\(key)"
         dataFetcher.fetchGnericJSONData(urlString: fullUrl, response: completion)
     }
-    
-    func fetchCreditsData(withId id: Int, completion: @escaping (DetailCreditsData?) -> Void) {
-        let fullUrl = "\(movieUrl)/movie/\(id)/credits\(key)"
+    //Fetch movie credits data
+    func fetchCreditsData(ofType type: String, withId id: Int, completion: @escaping (DetailCreditsData?) -> Void) {
+        let fullUrl = "\(movieUrl)/\(type)/\(id)/credits\(key)"
         dataFetcher.fetchGnericJSONData(urlString: fullUrl, response: completion)
     }
     
 }
-
-
