@@ -16,12 +16,10 @@ class MovieCardController: UIViewController {
     let webViewController = WebViewController()
     var movieName: String?
     
-    private var fakeActor: [Actor] = []
-    private var newActor: [CastList] = []
-    
     //MARK: - Private Properties
     private lazy var compareModel = CompareModel()
     private lazy var starsView = StarsView()
+    private var newActor: [CastList] = []
     
     //MARK: - Interface Elements
     private let posterView: UIImageView = {
@@ -133,7 +131,6 @@ class MovieCardController: UIViewController {
         setupViews()
         setupConstrains()
         setupData()
-        fakeActor = Actor.getActor()
     }
     
     //MARK: - Private Properties
@@ -195,7 +192,6 @@ class MovieCardController: UIViewController {
             guard let unwrappedMovie = movieGet else { return }
             self.webViewController.webSite = unwrappedMovie.homepage
             self.configureMovieCard(model: unwrappedMovie)
-            print(unwrappedMovie.homepage)
         }
         // .getCast fetcher get information aboult cast: actor's name, character name and URL-path of portrait
         compareModel.getCast(ofType: unwrappedMediaType, with: unwrappedId) { [weak self] castGet in
@@ -240,7 +236,6 @@ extension MovieCardController: UICollectionViewDelegate, UICollectionViewDataSou
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ActorCollectionViewCell.collectionId, for: indexPath) as! ActorCollectionViewCell
         let model = newActor[indexPath.row]
-//      let model = fakeActor[indexPath.row]
         cell.configure(model: model)
         
         return cell

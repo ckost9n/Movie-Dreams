@@ -141,6 +141,7 @@ class MainViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: VideoListCell.identifier, for: indexPath) as! VideoListCell
         
         cell.cellDelegate = self
+        cell.selectionStyle = .none
 
         var category = Categories.trendingAllDay
         var model = [MovieCard]()
@@ -161,6 +162,7 @@ class MainViewController: UITableViewController {
         
         return cell
     }
+    
 }
 
 // MARK: - Extension EventsCell
