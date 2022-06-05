@@ -58,8 +58,3 @@ class DataFetcherService {
     }
     
 }
-//
-// https://api.themoviedb.org/3/movie/76479?api_key=3180eef08dadb9ca352d50241ce95409&language=en-US
-// https://api.themoviedb.org/3/tv/76479?api_key=3180eef08dadb9ca352d50241ce95409&language=en-US
-
-// https://api.themoviedb.org/3/trending/all/day?api_key=3180eef08dadb9ca352d50241ce95409

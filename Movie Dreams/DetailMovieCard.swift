@@ -16,6 +16,7 @@ struct DetailMovieCard {
     let releaseDate: String?     // Return string of type "2022-04-06"
     let runtime: Int?            // Return number of minutes
     let episodeRunTime: [Int]?   // Retur array of minutes
+    let rating: Float
     // Calculatted variable for getting URL-String of background poster
     var backdropURL: String? {
         guard backdropPath != nil else { return nil }
@@ -38,7 +39,7 @@ struct DetailMovieCard {
         if runtime != nil {
             return "\(String(runtime! / 60))h\(String(runtime! % 60))min"
         } else {
-            return String(episodeRunTime?[0] ?? 0)
+            return "\(String(episodeRunTime?[0] ?? 0))min"
         }
     }
     //MARK: - init()
@@ -49,7 +50,9 @@ struct DetailMovieCard {
          runtime: Int?,
          episodeRunTime: [Int],
          homepage: String?,
-         genres: [Genres]?) {
+         genres: [Genres]?,
+         rating: Float
+    ) {
         self.originalTitle = originalTitle
         self.backdropPath = backdropPath
         self.overview = overview
@@ -58,5 +61,6 @@ struct DetailMovieCard {
         self.episodeRunTime = episodeRunTime
         self.homepage = homepage
         self.genres = genres
+        self.rating = rating
     }
 }

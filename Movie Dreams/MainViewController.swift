@@ -46,7 +46,6 @@ class MainViewController: UITableViewController {
             compareModel.getMovieLists(category: category) { [weak self] categoryGet in
                 guard let self = self else { return }
                 guard let categoryGet = categoryGet else { return }
-                print(categoryGet)
                 self.categories.append(categoryGet)
                 self.tableView.reloadData()
             }

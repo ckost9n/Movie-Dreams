@@ -12,90 +12,65 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate {
     
     //MARK: - Public Properties
     var webSite: String?
-    
     //MARK: - Private Properties
     private var webView: WKWebView!
-    private var progressView: UIProgressView!
     
     
+    private lazy var closeButton: UIButton = {
+        $0.frame = CGRect(x: 40, y: 40, width: 0, height: 0)
+        $0.setImage(UIImage(systemName: "xmark.square.fill"), for: .normal)
+        $0.tintColor = .white
+        $0.addTarget(self, action: #selector(closeTapped), for: .touchUpInside)
+        $0.translatesAutoresizingMaskIntoConstraints = false
+      return $0
+    }(UIButton())
     //MARK: - Life Cycle
     override func loadView() {
         super.loadView()
-        
         configureWebView()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupWebView()
-        setupToolBar()
+        setConstrains()
     }
     
-    //MARK: - Private Methods
-    @objc private func shareTapped() {
-        let viewController = UIActivityViewController(activityItems: [webView.url ?? "Not found"], applicationActivities: [])
-        viewController.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
-        present(viewController, animated: true)
+    @objc private func closeTapped() {
+        self.dismiss(animated: true)
     }
     
+   //MARK: - configureWebView
     private func configureWebView() {
         let webConfiguration = WKWebViewConfiguration()
         webView = WKWebView(frame: .zero, configuration: webConfiguration)
         webView.uiDelegate = self
         webView?.navigationDelegate = self
-        view = webView
+        view.addSubview(webView)
+        webView.frame = view.bounds
+        view.sendSubviewToBack(webView)
+        view.addSubview(closeButton)
+        
     }
-    
+    //MARK: - setupWebView
     private func setupWebView() {
-        view.backgroundColor = .black
         guard let unwrappedURL = webSite else { return }
         guard let url = URL(string: unwrappedURL) else { return }
         webView?.load(URLRequest(url: url))
         webView?.allowsBackForwardNavigationGestures = true
-        webView?.addObserver(self,
-                             forKeyPath: #keyPath(WKWebView.estimatedProgress),
-                             options: .new,
-                             context: nil)
-    }
-    
-    private func setupToolBar() {
-        progressView = UIProgressView(progressViewStyle: .default)
-        progressView.sizeToFit()
-        let progressButton = UIBarButtonItem(customView: progressView)
-        let share = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(shareTapped))
-        let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        let refresh = UIBarButtonItem(barButtonSystemItem: .refresh, target: webView, action: #selector(webView.reload))
-        let back = UIBarButtonItem(image: UIImage(systemName: "chevron.backward"),
-                                   style: .plain,
-                                   target: webView,
-                                   action: #selector(webView.goBack))
-        let forward = UIBarButtonItem(image: UIImage(systemName: "chevron.forward"),
-                                      style: .plain,
-                                      target: webView,
-                                      action: #selector(webView.goForward))
         
-        toolbarItems = [back, spacer, forward, spacer, share, spacer, progressButton, spacer, refresh]
-        navigationController?.isToolbarHidden = false
     }
     
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-            if keyPath == "estimatedProgress" {
-                progressView.progress = Float(webView.estimatedProgress)
-            }
-    }
+}
 
-    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        title = webView.title
-    }
-
-//    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-//        let url = navigationAction.request.url
-//        if url!.absoluteString.range(of: "about:blank") != nil {
-//                decisionHandler(.cancel)
-//                return
-//           }
-//            decisionHandler(.cancel)
-//    }
+extension WebViewController {
     
+    private func setConstrains() {
+    NSLayoutConstraint.activate([
+        closeButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+        closeButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+        closeButton.widthAnchor.constraint(equalToConstant: 60),
+        closeButton.heightAnchor.constraint(equalToConstant: 60)
+    ])
+    }
 }

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class AtorCollectionViewCell: UICollectionViewCell {
+class ActorCollectionViewCell: UICollectionViewCell {
     
     static let collectionId = "CollectionCell"
     
@@ -75,7 +75,7 @@ class AtorCollectionViewCell: UICollectionViewCell {
     }
 }
 
-extension AtorCollectionViewCell {
+extension ActorCollectionViewCell {
     
     private func setConstrains() {
         

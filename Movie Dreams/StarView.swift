@@ -31,7 +31,7 @@ public class StarsView: UIView {
     
     let stackView = UIStackView()
     stackView.translatesAutoresizingMaskIntoConstraints = false
-    
+    stackView.axis = .horizontal
     for view in imageViews {
       stackView.addArrangedSubview(view)
     }

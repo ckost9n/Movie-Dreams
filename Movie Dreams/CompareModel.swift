@@ -47,8 +47,9 @@ class CompareModel {
                                            releaseDate: movie.releaseDate ?? movie.firstAirDate,
                                            runtime: movie.runtime,
                                            episodeRunTime: movie.episodeRunTime ?? [],
-                                           homepage: movie.homepage,
-                                           genres: movie.genres
+                                           homepage: movie.homepage ?? "https://www.google.com/",
+                                           genres: movie.genres,
+                                           rating: movie.voteAverage
             )
             completion(newMovie)
         }
