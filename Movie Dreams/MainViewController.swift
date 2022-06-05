@@ -186,7 +186,7 @@ extension MainViewController: EventsCell {
 
         let movieVC = MovieCardController()
         movieVC.currentMovie = movie
-        movieVC.modalPresentationStyle = .popover
+        movieVC.modalPresentationStyle = .fullScreen
         movieVC.modalTransitionStyle = .coverVertical
 
         navigationController?.present(movieVC, animated: true)
