@@ -25,7 +25,7 @@ class MovieCardController: UIViewController {
     
     //MARK: - Interface Elements
     private let posterView: UIImageView = {
-        $0.image = UIImage(named: "poster")
+        //$0.image = UIImage(named: "poster")
         $0.contentMode = .scaleAspectFill
         $0.translatesAutoresizingMaskIntoConstraints = false
         return $0
@@ -221,7 +221,7 @@ class MovieCardController: UIViewController {
         //Set description to rewievLabel
         self.rewievLabel.text = model.overview
         self.ratingLabel.text = String(model.rating)
-        self.starsView.rating = Int(model.rating)
+        self.starsView.rating = Int((model.rating.rounded() / 2).rounded())
     }
     
 }
@@ -290,7 +290,7 @@ extension MovieCardController {
         NSLayoutConstraint.activate([
             starsView.topAnchor.constraint(equalTo: movieSubTitle.bottomAnchor, constant: 5),
             starsView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            starsView.widthAnchor.constraint(equalToConstant: view.frame.width / 2),
+            starsView.widthAnchor.constraint(equalToConstant: view.frame.width / 3),
             starsView.heightAnchor.constraint(equalToConstant: 20)
         ])
         //Constrains for ratingLabel
