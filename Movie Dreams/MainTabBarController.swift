@@ -48,25 +48,11 @@ class MainTabBarController: UITabBarController {
             image: UIImage(systemName: itemImage),
             tag: 0
         )
-//        item.imageInsets = UIEdgeInsets.init(top: 3, left: 0, bottom: 0, right: 0)
-//        item.titlePositionAdjustment = .init(horizontal: 10, vertical: 10)
-        
         
         let navController = UINavigationController(rootViewController: vc)
         navController.tabBarItem = item
         
         return navController
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
