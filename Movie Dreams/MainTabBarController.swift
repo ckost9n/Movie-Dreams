@@ -13,6 +13,12 @@ class MainTabBarController: UITabBarController {
         super.viewDidLoad()
 
         setupTabBar()
+        
+        print("Test print")
+    }
+    
+    private func testGit() {
+        
     }
     
     private func setupTabBar() {
